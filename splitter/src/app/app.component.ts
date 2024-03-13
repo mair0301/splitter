@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy
 
     private _isDragging: boolean = false;
     private _lastVolume: number = 10;
+    private _progressInterval: any;
 
     public getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
     public getVolumeInPercent = () => (Math.round(this.volume)).toString();
@@ -34,13 +35,16 @@ export class AppComponent implements OnInit, OnDestroy
         {
             this.videoPlayer.nativeElement.play();
             this.isPlaying = true;
+            this._progressInterval = setInterval(() =>
+            {
+                this.updateProgressBar();
+            }, 500);
         } else
         {
             this.videoPlayer.nativeElement.pause();
             this.isPlaying = false;
+            clearInterval(this._progressInterval);
         }
-
-        this.updateProgressBar();
     }
 
     toggleFullScreen(): void
@@ -51,21 +55,17 @@ export class AppComponent implements OnInit, OnDestroy
             if (elem.requestFullscreen)
             {
                 elem.requestFullscreen();
-            }
-            else if (elem.mozRequestFullScreen)
+            } else if (elem.mozRequestFullScreen)
             {
                 elem.mozRequestFullScreen();
-            }
-            else if (elem.webkitRequestFullscreen)
+            } else if (elem.webkitRequestFullscreen)
             {
                 elem.webkitRequestFullscreen();
-            }
-            else if (elem.msRequestFullscreen)
+            } else if (elem.msRequestFullscreen)
             {
                 elem.msRequestFullscreen();
             }
         }
-
         this.isFullScreen = !this.isFullScreen;
     }
 
@@ -76,8 +76,7 @@ export class AppComponent implements OnInit, OnDestroy
             this.muted = false;
             this.volume = this._lastVolume;
             this.onVolChange(this.volume);
-        }
-        else
+        } else
         {
             this.muted = true;
             this._lastVolume = this.volume;
@@ -85,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy
         }
     }
 
-    skipVideo(seconds: number) 
+    skipVideo(seconds: number)
     {
         const currentTime = this.videoPlayer.nativeElement.currentTime;
         let newTime = currentTime + seconds;
@@ -121,6 +120,7 @@ export class AppComponent implements OnInit, OnDestroy
     {
         this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
+        clearInterval(this._progressInterval);
     }
 
     updateProgressBar()
