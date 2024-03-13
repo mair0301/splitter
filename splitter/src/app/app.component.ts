@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit
 {
     @ViewChild('videoPlayer') videoPlayer!: ElementRef;
     public isPlaying: boolean = false;
@@ -34,9 +34,7 @@ export class AppComponent implements OnInit, OnDestroy
     public getVolumeButtonIcon = () => (this.muted == true) ? 'volume_off' : 'volume_down';
 
     constructor(private elementRef: ElementRef)
-    {
-        // this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement?.duration ?? 0);
-    }
+    { }
 
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent)
@@ -117,21 +115,6 @@ export class AppComponent implements OnInit, OnDestroy
             {
                 elem.msRequestFullscreen();
             }
-        } else
-        {
-            if (document.exitFullscreen)
-            {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen)
-            {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen)
-            {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen)
-            {
-                document.msExitFullscreen();
-            }
         }
     }
 
@@ -186,29 +169,37 @@ export class AppComponent implements OnInit, OnDestroy
 
     ngOnInit()
     {
-        document.addEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
+        console.log("this.videoPlayer.nativeElement");
+        // this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement?.duration ?? 0);
+
+        // document.addEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.addEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.addEventListener('mouseup', this.stopDragging.bind(this));
     }
 
     ngOnDestroy()
     {
-        document.removeEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
+        // document.removeEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
         clearInterval(this._progressInterval);
     }
 
+    ngAfterViewInit(): void
+    {
+
+    }
+
     handleFullscreenChange()
     {
-        this.isFullScreen = !!document.fullscreenElement;
-        if (this.isFullScreen)
-        {
-            this.showControls = false;
-        } else
-        {
-            this.showControls = true;
-        }
+        // this.isFullScreen = !!document.fullscreenElement;
+        // if (this.isFullScreen)
+        // {
+        //     this.showControls = false;
+        // } else
+        // {
+        //     this.showControls = true;
+        // }
     }
 
 

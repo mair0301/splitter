@@ -10,42 +10,48 @@
         </div>
 
         <div [hidden]="!showControls" class="controlBar">
-            <div class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
-                <div class="progress-bar" [style.width]="progress + '%'"></div>
-                <div class="progress-knob" [style.left]="progress + '%'"></div>
-            </div>
-
-            <div style="display: inline-block">
-                <mat-icon class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</mat-icon>
-                <mat-icon class="groupActionButton" (click)="toggleFullScreen()">{{ getFullscreenIcon() }}</mat-icon>
-            </div>
-
-            <div class="buttonGroup">
-                <mat-icon class="groupActionButton" (click)="skipVideo(-10)">skip_previous</mat-icon>
-                <mat-icon class="groupActionButton" (click)="skipVideo(10)">skip_next</mat-icon>
-            </div>
-
-            <div class="buttonGroup">
-                <span class="baseLabel">{{ currentTime }}</span>
-                <span class="baseLabel" style="margin: 0 0.25rem">/</span>
-                <span class="baseLabel">{{ videoDuration }}</span>
-            </div>
-
-            <div class="volumeButtonGroup">
-                <mat-icon class="groupActionButton" style="margin-right: 0.5rem;" (click)="toggleMuteVideo()">{{ getVolumeButtonIcon() }}</mat-icon>
-
-                <div class="slider-container">
-                    <input
-                        type="range"
-                        class="slider"
-                        [min]="0"
-                        [max]="100"
-                        [step]="1"
-                        [value]="volume"
-                        (input)="onVolumeChanged($event)">
+            <div style="width: 100%; height: 6px;">
+                <div class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
+                    <div class="progress-bar" [style.width]="progress + '%'"></div>
+                    <div class="progress-knob" [style.left]="progress + '%'"></div>
                 </div>
 
-                <span class="baseLabel" style="margin: 0 0.75rem">{{ getVolumeInPercent() }}</span>
+                <div (mousedown)="startDragging($event)" (click)="seekVideo($event)" class="progress-bar-buffer" [style.width]="(progress + 5) + '%'"></div>
+            </div>
+
+            <div>
+                <div style="display: inline-block">
+                    <mat-icon class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</mat-icon>
+                    <mat-icon class="groupActionButton" (click)="toggleFullScreen()">{{ getFullscreenIcon() }}</mat-icon>
+                </div>
+
+                <div class="buttonGroup">
+                    <mat-icon class="groupActionButton" (click)="skipVideo(-10)">skip_previous</mat-icon>
+                    <mat-icon class="groupActionButton" (click)="skipVideo(10)">skip_next</mat-icon>
+                </div>
+
+                <div class="buttonGroup">
+                    <span class="baseLabel">{{ currentTime }}</span>
+                    <span class="baseLabel" style="margin: 0 0.25rem">/</span>
+                    <span class="baseLabel">{{ videoDuration }}</span>
+                </div>
+
+                <div class="volumeButtonGroup">
+                    <mat-icon class="groupActionButton" style="margin-right: 0.5rem;" (click)="toggleMuteVideo()">{{ getVolumeButtonIcon() }}</mat-icon>
+
+                    <div class="slider-container">
+                        <input
+                            type="range"
+                            class="slider"
+                            [min]="0"
+                            [max]="100"
+                            [step]="1"
+                            [value]="volume"
+                            (input)="onVolumeChanged($event)">
+                    </div>
+
+                    <span class="baseLabel" style="margin: 0 0.75rem">{{ getVolumeInPercent() }}</span>
+                </div>
             </div>
         </div>
     </div>
