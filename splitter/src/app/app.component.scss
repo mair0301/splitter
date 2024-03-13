@@ -22,6 +22,17 @@
     z-index: 1000;
 }
 
+.videoInfo {
+    height: 40px;
+    line-height: 40px;
+    background: rgba(231, 231, 231, 0.918);
+    margin: 0px;
+    position: absolute;
+    left: 50%;    
+    bottom: 50%;
+    z-index: 1000;
+}
+
 .buttonGroup {
     margin-left: 0.5rem;
     display: inline-block;

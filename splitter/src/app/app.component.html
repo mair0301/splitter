@@ -5,6 +5,10 @@
             Your browser does not support the video tag.
         </video>
 
+        <div [hidden]="!showVideoInfo" class="videoInfo">
+            <label>{{ getPlayPauseVideoInfoText() }}</label>
+        </div>
+
         <div [hidden]="!showControls" class="controlBar">
             <div class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
                 <div class="progress-bar" [style.width]="progress + '%'"></div>

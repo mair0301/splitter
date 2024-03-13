@@ -18,12 +18,14 @@ export class AppComponent implements OnInit, OnDestroy
     public muted: boolean = false;
     public showControls: boolean = false;
     public progress: number = 0;
+    public showVideoInfo: boolean = false;
 
     private _isDragging: boolean = false;
     private _lastVolume: number = 10;
     private _progressInterval: any;
 
     public getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
+    public getPlayPauseVideoInfoText = () => this.isPlaying ? 'Weiter' : 'Pause';
     public getVolumeInPercent = () => (Math.round(this.volume)).toString();
     public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
 
@@ -46,6 +48,16 @@ export class AppComponent implements OnInit, OnDestroy
         }
     }
 
+    private showVideoInfoDialog()
+    {
+        this.showVideoInfo = !this.showVideoInfo;
+
+        setTimeout(() =>
+        {
+            this.showVideoInfo = !this.showVideoInfo;
+        }, 1500);
+    }
+
     togglePlayPause(): void
     {
         if (this.videoPlayer.nativeElement.paused)
@@ -56,12 +68,15 @@ export class AppComponent implements OnInit, OnDestroy
             {
                 this.updateProgressBar();
             }, 500);
-        } else
+        }
+        else
         {
             this.videoPlayer.nativeElement.pause();
             this.isPlaying = false;
             clearInterval(this._progressInterval);
         }
+
+        this.showVideoInfoDialog();
     }
 
     toggleFullScreen(): void
