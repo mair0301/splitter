@@ -1,0 +1,9 @@
+<div class="custom-video-player">
+    <video class="videoPlayerMain" #videoPlayer controls (click)="togglePlayPause()">
+        <source src="assets/waves.mp4" type="video/mp4">
+    </video>
+
+    <div style="margin-top: 2rem;">
+        <button (click)="togglePlayPause()">{{ getButtonText() }}</button>
+    </div>
+</div>
