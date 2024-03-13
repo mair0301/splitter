@@ -11,13 +11,13 @@
 }
 
 .controlBar {
-    height: 50px;
-    line-height: 50px;
-    background: #fafafacb;
+    height: 40px;
+    line-height: 40px;
+    background: rgba(231, 231, 231, 0.918);
     width: 100%;
     margin: 0px;
     position: absolute;
-    bottom: 0px;
+    bottom: 5px;
     left: 0px;
     z-index: 1000;
 }
