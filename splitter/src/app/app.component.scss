@@ -11,7 +11,8 @@
 }
 
 .controlBar {
-    height: 30px;
+    height: 45px;
+    line-height: 45px;
     background: #fafafacb;
     width: 100%;
     margin: 0px;
@@ -25,4 +26,24 @@
     margin-left: 0.5rem;
     display: inline-block;
     margin-top: 5px;
+}
+
+.groupActionButton {
+    vertical-align: middle;
+    border-radius: 8px;
+    background: rgba(81, 157, 201, 0.397);
+    padding: 0.25rem 0.75rem;
+    color: white;
+    margin-left: 0.5rem;
+    border: 0px;
+    cursor: pointer;
+}
+
+.groupActionButton:hover {
+    background: rgba(81, 157, 201, 0.568);
+}
+
+.volumeButtonGroup {
+    float: right;
+    right: 0px;
 }

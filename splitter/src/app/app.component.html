@@ -7,20 +7,23 @@
 
         <div [hidden]="!showControls" class="controlBar">
             <div class="buttonGroup">
-                <button (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</button>
-                <button (click)="toggleFullScreen()">{{ isFullScreen ? 'Exit Fullscreen' : 'Fullscreen' }}</button>
+                <button class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</button>
+                <button class="groupActionButton" (click)="toggleFullScreen()">{{ isFullScreen ? 'Exit Fullscreen' : 'Fullscreen' }}</button>
             </div>
 
             <div class="buttonGroup">
-                <button (click)="adjustVolume('up')">Increase Volume</button>
-                <button (click)="adjustVolume('down')">Decrease Volume</button>
+                <button class="groupActionButton" (click)="skipVideo(10)">+ 10</button>
+                <button class="groupActionButton" (click)="skipVideo(-10)">- 10</button>
             </div>
 
-            <div class="buttonGroup">
-                <button (click)="skipVideo(10)">+ 10</button>
-                <button (click)="skipVideo(-10)">- 10</button>
+            <div class="volumeButtonGroup">
+                <button class="groupActionButton" (click)="toggleMuteVideo()">{{ getVolumeButtonText() }}</button>
 
-                <span style="margin-left: 0.75rem">{{ volume }}</span>
+                <mat-slider style="margin-left: 0.75rem">
+                    <input [(value)]="volume" (change)="onVolChange(volume)" matSliderThumb>
+                </mat-slider>
+                
+                <span style="margin-left: 0.75rem">{{ getVolumeInPercent() }}</span>
             </div>
         </div>
     </div>

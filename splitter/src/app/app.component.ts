@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, MatSliderModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
@@ -13,8 +14,11 @@ export class AppComponent
     @ViewChild('videoPlayer') videoPlayer!: ElementRef;
     public isPlaying: boolean = false;
     public isFullScreen: boolean = false;
-    public volume: number = 1;
+    public volume: number = 100;
+    public muted: boolean = false;
     public showControls: boolean = false;
+
+    private _lastVolume: number = 10;
 
     getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
 
@@ -57,22 +61,20 @@ export class AppComponent
         this.isFullScreen = !this.isFullScreen;
     }
 
-    adjustVolume(direction: string): void
+    toggleMuteVideo()
     {
-        if (direction === 'up')
+        if (this.muted)
         {
-            if (this.volume < 1)
-            {
-                this.volume += 0.1;
-            }
-        } else if (direction === 'down')
-        {
-            if (this.volume > 0)
-            {
-                this.volume -= 0.1;
-            }
+            this.muted = false;
+            this.volume = this._lastVolume;
+            this.onVolChange(this.volume);
         }
-        this.videoPlayer.nativeElement.volume = this.volume;
+        else
+        {
+            this.muted = true;
+            this._lastVolume = this.volume;
+            this.onVolChange(0);
+        }
     }
 
     skipVideo(seconds: number) 
@@ -92,4 +94,13 @@ export class AppComponent
     {
         this.showControls = false;
     }
+
+    onVolChange(e: number)
+    {
+        this.volume = e;
+        this.videoPlayer.nativeElement.volume = (this.volume / 100);
+    }
+
+    public getVolumeInPercent = () => (Math.round(this.volume)).toString();
+    public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
 }
