@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -28,6 +28,23 @@ export class AppComponent implements OnInit, OnDestroy
     public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
 
     constructor(private elementRef: ElementRef) { }
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent)
+    {
+        switch (event.key)
+        {
+            case "ArrowRight":
+                this.skipVideo(10);
+                break;
+            case "ArrowLeft":
+                this.skipVideo(-10);
+                break;
+            case " ":
+                this.togglePlayPause();
+                break;
+        }
+    }
 
     togglePlayPause(): void
     {
