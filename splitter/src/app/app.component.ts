@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -9,7 +9,7 @@ import { MatSliderModule } from '@angular/material/slider';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent
+export class AppComponent implements OnInit, OnDestroy
 {
     @ViewChild('videoPlayer') videoPlayer!: ElementRef;
     public isPlaying: boolean = false;
