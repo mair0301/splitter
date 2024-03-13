@@ -6,6 +6,11 @@
         </video>
 
         <div [hidden]="!showControls" class="controlBar">
+            <div class="progress-bar-container" (click)="seekVideo($event)">
+                <div class="progress-bar" [style.width]="progress + '%'"></div>
+                <div class="progress-knob" [style.left]="progress + '%'"></div>
+            </div>
+
             <div class="buttonGroup">
                 <button class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</button>
                 <button class="groupActionButton" (click)="toggleFullScreen()">{{ isFullScreen ? 'Exit Fullscreen' : 'Fullscreen' }}</button>
@@ -22,7 +27,7 @@
                 <mat-slider style="margin-left: 0.75rem">
                     <input [(value)]="volume" (change)="onVolChange(volume)" matSliderThumb>
                 </mat-slider>
-                
+
                 <span style="margin-left: 0.75rem">{{ getVolumeInPercent() }}</span>
             </div>
         </div>

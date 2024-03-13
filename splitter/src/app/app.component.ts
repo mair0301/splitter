@@ -17,10 +17,13 @@ export class AppComponent
     public volume: number = 100;
     public muted: boolean = false;
     public showControls: boolean = false;
+    public progress: number = 0;
 
     private _lastVolume: number = 10;
 
-    getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
+    public getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
+    public getVolumeInPercent = () => (Math.round(this.volume)).toString();
+    public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
 
     togglePlayPause(): void
     {
@@ -33,6 +36,8 @@ export class AppComponent
             this.videoPlayer.nativeElement.pause();
             this.isPlaying = false;
         }
+
+        this.updateProgressBar();
     }
 
     toggleFullScreen(): void
@@ -83,6 +88,8 @@ export class AppComponent
         let newTime = currentTime + seconds;
         newTime = Math.max(0, Math.min(this.videoPlayer.nativeElement.duration, newTime));
         this.videoPlayer.nativeElement.currentTime = newTime;
+
+        this.updateProgressBar();
     }
 
     onMouseEnter()
@@ -101,6 +108,22 @@ export class AppComponent
         this.videoPlayer.nativeElement.volume = (this.volume / 100);
     }
 
-    public getVolumeInPercent = () => (Math.round(this.volume)).toString();
-    public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
+    updateProgressBar()
+    {
+        const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+        const progressPercent = (video.currentTime / video.duration) * 100;
+        this.progress = progressPercent;
+    }
+
+    seekVideo(event: MouseEvent)
+    {
+        const progressBar: HTMLElement = event.currentTarget as HTMLElement;
+        const rect = progressBar.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+        video.currentTime = (percentage * video.duration) / 100;
+
+        this.updateProgressBar();
+    }
 }
