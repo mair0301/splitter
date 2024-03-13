@@ -14,6 +14,7 @@ export class AppComponent
     public isPlaying: boolean = false;
     public isFullScreen: boolean = false;
     public volume: number = 1;
+    public showControls: boolean = true;
 
     togglePlayPause(): void
     {
@@ -78,5 +79,15 @@ export class AppComponent
         let newTime = currentTime + seconds;
         newTime = Math.max(0, Math.min(this.videoPlayer.nativeElement.duration, newTime));
         this.videoPlayer.nativeElement.currentTime = newTime;
+    }
+
+    onMouseEnter()
+    {
+        this.showControls = true;
+    }
+
+    onMouseLeave()
+    {
+        this.showControls = false;
     }
 }

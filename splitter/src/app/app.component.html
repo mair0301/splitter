@@ -1,11 +1,11 @@
 <div class="custom-video-player">
-    <div class="videoContainer" style="max-width: 750px">
+    <div class="videoContainer" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
         <video class="videoPlayerMain" #videoPlayer (click)="togglePlayPause()">
             <source src="../assets/nexus.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
-        <div class="controlBar">
+        <div [hidden]="!showControls" class="controlBar">
             <div class="buttonGroup">
                 <button (click)="togglePlayPause()">
                     {{ isPlaying ? 'Pause' : 'Play' }}
