@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy
     public muted: boolean = false;
     public showControls: boolean = false;
     public progress: number = 0;
+    public currentTime: string = this.getFormattedTime(0);
     public showVideoInfo: boolean = false;
 
     private _isDragging: boolean = false;
@@ -58,6 +59,19 @@ export class AppComponent implements OnInit, OnDestroy
         }, 1500);
     }
 
+    private getFormattedTime(value: number): string
+    {
+        const hours: number = Math.floor(value / 3600);
+        const minutes: number = Math.floor((value % 3600) / 60);
+        const seconds: number = Math.floor(value % 60);
+
+        const hoursStr: string = (hours < 10) ? '0' + hours : hours.toString();
+        const minutesStr: string = (minutes < 10) ? '0' + minutes : minutes.toString();
+        const secondsStr: string = (seconds < 10) ? '0' + seconds : seconds.toString();
+
+        return hoursStr + ':' + minutesStr + ':' + secondsStr;
+    }
+
     togglePlayPause(): void
     {
         if (this.videoPlayer.nativeElement.paused)
@@ -67,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy
             this._progressInterval = setInterval(() =>
             {
                 this.updateProgressBar();
-            }, 500);
+            }, 1000);
         }
         else
         {
@@ -160,6 +174,7 @@ export class AppComponent implements OnInit, OnDestroy
         const video: HTMLVideoElement = this.videoPlayer.nativeElement;
         const progressPercent = (video.currentTime / video.duration) * 100;
         this.progress = progressPercent;
+        this.currentTime = this.getFormattedTime(Math.round(video.currentTime));
     }
 
     seekVideo(event: MouseEvent)

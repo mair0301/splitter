@@ -16,6 +16,10 @@
             </div>
 
             <div class="buttonGroup">
+                <label>{{ currentTime }}</label>
+            </div>
+
+            <div class="buttonGroup">
                 <button class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</button>
                 <button class="groupActionButton" (click)="toggleFullScreen()">{{ isFullScreen ? 'Exit Fullscreen' : 'Fullscreen' }}</button>
             </div>
