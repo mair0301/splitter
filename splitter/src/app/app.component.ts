@@ -187,7 +187,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngAfterViewInit(): void
     {
-
+        this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement.duration);
     }
 
     handleFullscreenChange()
