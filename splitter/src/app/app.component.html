@@ -16,7 +16,7 @@
             </div>
 
             <div class="buttonGroup">
-                <label>{{ currentTime }}</label>
+                <span class="baseLabel">{{ currentTime }}</span>
             </div>
 
             <div class="buttonGroup">
@@ -36,7 +36,7 @@
                     <input [(value)]="volume" (change)="onVolChange(volume)" matSliderThumb>
                 </mat-slider>
 
-                <span style="margin-left: 0.75rem; vertical-align: middle;">{{ getVolumeInPercent() }}</span>
+                <span class="baseLabel">{{ getVolumeInPercent() }}</span>
             </div>
         </div>
     </div>

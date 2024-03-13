@@ -13,6 +13,7 @@
 .controlBar {
     height: 40px;
     line-height: 40px;
+    vertical-align: middle;
     background: rgba(231, 231, 231, 0.918);
     width: 100%;
     margin: 0px;
@@ -35,9 +36,15 @@
 }
 
 .buttonGroup {
-    margin-left: 0.5rem;
+    margin-left: 1rem;
     display: inline-block;
     margin-top: 5px;
+}
+
+.baseLabel {
+    color: rgb(76, 139, 182);
+    height: 26px;
+    vertical-align: top;
 }
 
 .groupActionButton {
