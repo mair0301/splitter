@@ -19,11 +19,14 @@ export class AppComponent
     public showControls: boolean = false;
     public progress: number = 0;
 
+    private _isDragging: boolean = false;
     private _lastVolume: number = 10;
 
     public getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
     public getVolumeInPercent = () => (Math.round(this.volume)).toString();
     public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
+
+    constructor(private elementRef: ElementRef) { }
 
     togglePlayPause(): void
     {
@@ -108,6 +111,18 @@ export class AppComponent
         this.videoPlayer.nativeElement.volume = (this.volume / 100);
     }
 
+    ngOnInit()
+    {
+        this.elementRef.nativeElement.addEventListener('mousemove', this.dragProgress.bind(this));
+        this.elementRef.nativeElement.addEventListener('mouseup', this.stopDragging.bind(this));
+    }
+
+    ngOnDestroy()
+    {
+        this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
+        this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
+    }
+
     updateProgressBar()
     {
         const video: HTMLVideoElement = this.videoPlayer.nativeElement;
@@ -117,13 +132,40 @@ export class AppComponent
 
     seekVideo(event: MouseEvent)
     {
-        const progressBar: HTMLElement = event.currentTarget as HTMLElement;
-        const rect = progressBar.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const percentage = (x / rect.width) * 100;
-        const video: HTMLVideoElement = this.videoPlayer.nativeElement;
-        video.currentTime = (percentage * video.duration) / 100;
+        if (!this._isDragging)
+        {
+            const progressBar: HTMLElement = event.currentTarget as HTMLElement;
+            const rect = progressBar.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+            video.currentTime = (percentage * video.duration) / 100;
+        }
+    }
 
-        this.updateProgressBar();
+    startDragging(event: MouseEvent)
+    {
+        this._isDragging = true;
+        this.dragProgress(event);
+    }
+
+    dragProgress(event: MouseEvent)
+    {
+        if (this._isDragging)
+        {
+            const progressBar: HTMLElement = this.elementRef.nativeElement.querySelector('.progress-bar-container');
+            const rect = progressBar.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            let percentage = (x / rect.width) * 100;
+            percentage = Math.max(0, Math.min(100, percentage));
+            this.progress = percentage;
+            const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+            video.currentTime = (percentage * video.duration) / 100;
+        }
+    }
+
+    stopDragging()
+    {
+        this._isDragging = false;
     }
 }

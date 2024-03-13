@@ -6,7 +6,7 @@
         </video>
 
         <div [hidden]="!showControls" class="controlBar">
-            <div class="progress-bar-container" (click)="seekVideo($event)">
+            <div class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
                 <div class="progress-bar" [style.width]="progress + '%'"></div>
                 <div class="progress-knob" [style.left]="progress + '%'"></div>
             </div>
@@ -24,7 +24,7 @@
             <div class="volumeButtonGroup">
                 <button class="groupActionButton" (click)="toggleMuteVideo()">{{ getVolumeButtonText() }}</button>
 
-                <mat-slider style="margin-left: 0.75rem">
+                <mat-slider style="margin-left: 0.75rem; height: 48px; vertical-align: top;">
                     <input [(value)]="volume" (change)="onVolChange(volume)" matSliderThumb>
                 </mat-slider>
 
