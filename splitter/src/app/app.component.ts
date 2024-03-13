@@ -127,12 +127,12 @@ export class AppComponent implements OnInit, OnDestroy
         {
             this.muted = false;
             this.volume = this._lastVolume;
-            this.skipVideo(this.volume);
+            this.setVolume(this.volume);
         } else
         {
             this.muted = true;
             this._lastVolume = this.volume;
-            this.skipVideo(0);
+            this.setVolume(0);
         }
     }
 
