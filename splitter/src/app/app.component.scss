@@ -23,12 +23,13 @@
 }
 
 .videoInfo {
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
     background: rgba(231, 231, 231, 0.918);
     margin: 0px;
     position: absolute;
-    left: 50%;    
+    left: 50%;
     bottom: 50%;
     z-index: 1000;
 }
@@ -40,18 +41,14 @@
 }
 
 .groupActionButton {
-    vertical-align: top;
-    border-radius: 8px;
-    background: rgba(81, 157, 201, 0.397);
-    padding: 0.25rem 0.75rem;
-    color: white;
+    color: rgb(76, 139, 182);
     margin-left: 0.5rem;
     border: 0px;
     cursor: pointer;
 }
 
 .groupActionButton:hover {
-    background: #2D6494;
+    color: rgba(76, 140, 182, 0.63);
 }
 
 .volumeButtonGroup {

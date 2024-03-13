@@ -1,11 +1,12 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, MatSliderModule],
+    imports: [RouterOutlet, MatSliderModule, MatIconModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
@@ -25,10 +26,11 @@ export class AppComponent implements OnInit, OnDestroy
     private _lastVolume: number = 10;
     private _progressInterval: any;
 
-    public getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
-    public getPlayPauseVideoInfoText = () => this.isPlaying ? 'Weiter' : 'Pause';
+    public getPlayPauseButtonText = () => this.isPlaying ? 'pause' : 'play_arrow';
+    public getFullscreenIcon = () => this.isFullScreen ? 'fullscreen_exit' : 'fullscreen';
+    public getPlayPauseVideoInfoIcon = () => this.isPlaying ? 'play_arrow' : 'pause';
     public getVolumeInPercent = () => (Math.round(this.volume)).toString();
-    public getVolumeButtonText = () => (this.muted == true) ? 'stumm' : 'laut';
+    public getVolumeButtonIcon = () => (this.muted == true) ? 'volume_off' : 'volume_down';
 
     constructor(private elementRef: ElementRef) { }
 

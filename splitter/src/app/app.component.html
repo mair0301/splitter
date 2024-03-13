@@ -6,7 +6,7 @@
         </video>
 
         <div [hidden]="!showVideoInfo" class="videoInfo">
-            <label>{{ getPlayPauseVideoInfoText() }}</label>
+            <mat-icon class="groupActionButton" style="font-size: 32px;">{{ getPlayPauseVideoInfoIcon() }}</mat-icon>
         </div>
 
         <div [hidden]="!showControls" class="controlBar">
@@ -20,23 +20,23 @@
             </div>
 
             <div class="buttonGroup">
-                <button class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</button>
-                <button class="groupActionButton" (click)="toggleFullScreen()">{{ isFullScreen ? 'Exit Fullscreen' : 'Fullscreen' }}</button>
+                <mat-icon class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</mat-icon>
+                <mat-icon class="groupActionButton" (click)="toggleFullScreen()">{{ getFullscreenIcon() }}</mat-icon>
             </div>
 
             <div class="buttonGroup">
-                <button class="groupActionButton" (click)="skipVideo(10)">+ 10</button>
-                <button class="groupActionButton" (click)="skipVideo(-10)">- 10</button>
+                <mat-icon class="groupActionButton" (click)="skipVideo(-10)">skip_previous</mat-icon>
+                <mat-icon class="groupActionButton" (click)="skipVideo(10)">skip_next</mat-icon>
             </div>
 
             <div class="volumeButtonGroup">
-                <button class="groupActionButton" (click)="toggleMuteVideo()">{{ getVolumeButtonText() }}</button>
+                <mat-icon class="groupActionButton" (click)="toggleMuteVideo()">{{ getVolumeButtonIcon() }}</mat-icon>
 
                 <mat-slider style="margin-left: 0.75rem; height: 48px; vertical-align: top;">
                     <input [(value)]="volume" (change)="onVolChange(volume)" matSliderThumb>
                 </mat-slider>
 
-                <span style="margin-left: 0.75rem">{{ getVolumeInPercent() }}</span>
+                <span style="margin-left: 0.75rem; vertical-align: middle;">{{ getVolumeInPercent() }}</span>
             </div>
         </div>
     </div>
