@@ -117,8 +117,22 @@ export class AppComponent implements OnInit, OnDestroy
             {
                 elem.msRequestFullscreen();
             }
+        } else
+        {
+            if (document.exitFullscreen)
+            {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen)
+            {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen)
+            {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen)
+            {
+                document.msExitFullscreen();
+            }
         }
-        this.isFullScreen = !this.isFullScreen;
     }
 
     toggleMuteVideo()
@@ -172,16 +186,31 @@ export class AppComponent implements OnInit, OnDestroy
 
     ngOnInit()
     {
+        document.addEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.addEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.addEventListener('mouseup', this.stopDragging.bind(this));
     }
 
     ngOnDestroy()
     {
+        document.removeEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
         clearInterval(this._progressInterval);
     }
+
+    handleFullscreenChange()
+    {
+        this.isFullScreen = !!document.fullscreenElement;
+        if (this.isFullScreen)
+        {
+            this.showControls = false;
+        } else
+        {
+            this.showControls = true;
+        }
+    }
+
 
     updateProgressBar()
     {
