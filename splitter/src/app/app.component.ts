@@ -14,7 +14,9 @@ export class AppComponent
     public isPlaying: boolean = false;
     public isFullScreen: boolean = false;
     public volume: number = 1;
-    public showControls: boolean = true;
+    public showControls: boolean = false;
+
+    getPlayPauseButtonText = () => this.isPlaying ? 'Pause' : 'Weiter';
 
     togglePlayPause(): void
     {
