@@ -1,3 +1,7 @@
+.custom-video-player {
+    user-select: none;
+}
+
 .videoPlayerMain {
     border-radius: 8px;
     width: 100%;
@@ -11,14 +15,14 @@
 }
 
 .controlBar {
-    height: 40px;
-    line-height: 40px;
+    height: 35px;
+    line-height: 35px;
     vertical-align: middle;
     background: rgba(231, 231, 231, 0.918);
     width: 100%;
     margin: 0px;
     position: absolute;
-    bottom: 5px;
+    bottom: 0px;
     left: 0px;
     z-index: 1000;
 }
@@ -38,12 +42,12 @@
 .buttonGroup {
     margin-left: 1rem;
     display: inline-block;
-    margin-top: 5px;
 }
 
 .baseLabel {
     color: rgb(76, 139, 182);
     height: 26px;
+    line-height: 26px;
     vertical-align: top;
 }
 
@@ -85,4 +89,18 @@
     position: absolute;
     top: -1px;
     transform: translateX(-50%);
+}
+
+.slider-container {
+    display: inline-block;
+    align-items: center;
+    line-height: 35px;
+    vertical-align: top;
+}
+
+.slider {
+    width: 125px;
+    cursor: pointer;
+    height: 25px;
+    top: -25px !important;
 }

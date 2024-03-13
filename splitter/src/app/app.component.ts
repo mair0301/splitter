@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy
     public showControls: boolean = false;
     public progress: number = 0;
     public currentTime: string = this.getFormattedTime(0);
+    public videoDuration: string = this.getFormattedTime(0);
     public showVideoInfo: boolean = false;
 
     private _isDragging: boolean = false;
@@ -32,7 +33,10 @@ export class AppComponent implements OnInit, OnDestroy
     public getVolumeInPercent = () => (Math.round(this.volume)).toString();
     public getVolumeButtonIcon = () => (this.muted == true) ? 'volume_off' : 'volume_down';
 
-    constructor(private elementRef: ElementRef) { }
+    constructor(private elementRef: ElementRef)
+    {
+        // this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement?.duration ?? 0);
+    }
 
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent)
@@ -123,13 +127,27 @@ export class AppComponent implements OnInit, OnDestroy
         {
             this.muted = false;
             this.volume = this._lastVolume;
-            this.onVolChange(this.volume);
+            this.skipVideo(this.volume);
         } else
         {
             this.muted = true;
             this._lastVolume = this.volume;
-            this.onVolChange(0);
+            this.skipVideo(0);
         }
+    }
+
+    setVolume(e?: number)
+    {
+        if (e != null)
+            this.volume = e;
+
+        this.videoPlayer.nativeElement.volume = (this.volume / 100);
+    }
+
+    onVolumeChanged(e: any)
+    {
+        this.volume = Number(e.target.value);
+        this.setVolume(this.volume);
     }
 
     skipVideo(seconds: number)
@@ -150,12 +168,6 @@ export class AppComponent implements OnInit, OnDestroy
     onMouseLeave()
     {
         this.showControls = false;
-    }
-
-    onVolChange(e: number)
-    {
-        this.volume = e;
-        this.videoPlayer.nativeElement.volume = (this.volume / 100);
     }
 
     ngOnInit()
