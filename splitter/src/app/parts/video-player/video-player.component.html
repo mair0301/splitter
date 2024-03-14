@@ -5,39 +5,39 @@
             Your browser does not support the video tag.
         </video>
 
-        <div [hidden]="!showVideoInfo" class="videoInfo">
-            <mat-icon class="groupActionButton" style="font-size: 32px;">{{ getPlayPauseVideoInfoIcon() }}</mat-icon>
+        <div [hidden]="!showVideoInfo" class="videoInfo" [style.background]="backColor">
+            <mat-icon class="groupActionButton" [style.color]="fontColor" style="font-size: 32px;">{{ getPlayPauseVideoInfoIcon() }}</mat-icon>
         </div>
 
-        <div [hidden]="!showControls" class="controlBar">
+        <div [hidden]="!showControls" class="controlBar" [style.background]="backColor">
             <div style="width: 100%; height: 6px;">
-                <div class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
-                    <div class="progress-bar" [style.width]="progress + '%'"></div>
-                    <div class="progress-knob" [style.left]="progress + '%'"></div>
+                <div [style.background]="timelineColor" class="progress-bar-container" (mousedown)="startDragging($event)" (click)="seekVideo($event)">
+                    <div class="progress-bar" [style.background]="fontColor" [style.width]="progress + '%'"></div>
+                    <div class="progress-knob" [style.background]="fontColor" [style.left]="progress + '%'"></div>
                 </div>
 
-                <div (mousedown)="startDragging($event)" (click)="seekVideo($event)" class="progress-bar-buffer" [style.width]="(progress + 5) + '%'"></div>
+                <div (mousedown)="startDragging($event)" (click)="seekVideo($event)" class="progress-bar-buffer" [style.background]="bufferColor" [style.width]="(progress + 5) + '%'"></div>
             </div>
 
             <div>
                 <div style="display: inline-block">
-                    <mat-icon class="groupActionButton" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</mat-icon>
-                    <mat-icon class="groupActionButton" (click)="toggleFullScreen()">{{ getFullscreenIcon() }}</mat-icon>
+                    <mat-icon class="groupActionButton" [style.color]="fontColor" (click)="togglePlayPause()">{{ getPlayPauseButtonText() }}</mat-icon>
+                    <mat-icon class="groupActionButton" [style.color]="fontColor" (click)="toggleFullScreen()">{{ getFullscreenIcon() }}</mat-icon>
                 </div>
 
                 <div class="buttonGroup">
-                    <mat-icon class="groupActionButton" (click)="skipVideo(-10)">skip_previous</mat-icon>
-                    <mat-icon class="groupActionButton" (click)="skipVideo(10)">skip_next</mat-icon>
+                    <mat-icon class="groupActionButton" [style.color]="fontColor" (click)="skipVideo(-10)">skip_previous</mat-icon>
+                    <mat-icon class="groupActionButton" [style.color]="fontColor" (click)="skipVideo(10)">skip_next</mat-icon>
                 </div>
 
                 <div class="buttonGroup">
-                    <span class="baseLabel">{{ currentTime }}</span>
-                    <span class="baseLabel" style="margin: 0 0.25rem">/</span>
-                    <span class="baseLabel">{{ videoDuration }}</span>
+                    <span class="baseLabel" [style.color]="fontColor">{{ currentTime }}</span>
+                    <span class="baseLabel" [style.color]="fontColor" style="margin: 0 0.25rem">/</span>
+                    <span class="baseLabel" [style.color]="fontColor">{{ videoDuration }}</span>
                 </div>
 
                 <div class="volumeButtonGroup">
-                    <mat-icon class="groupActionButton" style="margin-right: 0.5rem;" (click)="toggleMuteVideo()">{{ getVolumeButtonIcon() }}</mat-icon>
+                    <mat-icon class="groupActionButton" [style.color]="fontColor" style="margin-right: 0.5rem;" (click)="toggleMuteVideo()">{{ getVolumeButtonIcon() }}</mat-icon>
 
                     <div class="slider-container">
                         <input
@@ -50,7 +50,7 @@
                             (input)="onVolumeChanged($event)">
                     </div>
 
-                    <span class="baseLabel" style="margin: 0 0.75rem">{{ getVolumeInPercent() }}</span>
+                    <span class="baseLabel" [style.color]="fontColor" style="margin: 0 0.75rem">{{ getVolumeInPercent() }}</span>
                 </div>
             </div>
         </div>

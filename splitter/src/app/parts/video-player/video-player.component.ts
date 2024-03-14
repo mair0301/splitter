@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, HostListener, AfterViewInit, Input, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,12 +10,29 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './video-player.component.html',
     styleUrl: './video-player.component.scss'
 })
-export class VideoPlayerComponent
+export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
 {
     @ViewChild('videoPlayer') videoPlayer!: ElementRef;
     public isPlaying: boolean = false;
+
+    @Input()
     public isFullScreen: boolean = false;
+
+    @Input()
     public volume: number = 100;
+
+    @Input()
+    public fontColor: string = "#4C8BB6";
+
+    @Input()
+    public backColor: string = "#ffffff";
+
+    @Input()
+    public bufferColor: string = "#adadad";
+
+    @Input()
+    public timelineColor: string = "#e8e8e8";
+
     public muted: boolean = false;
     public showControls: boolean = false;
     public progress: number = 0;
