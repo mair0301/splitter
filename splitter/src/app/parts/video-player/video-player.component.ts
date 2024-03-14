@@ -184,12 +184,14 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngOnInit()
     {
+        this.elementRef.nativeElement.addEventListener('dblclick', this.toggleFullScreen.bind(this));
         this.elementRef.nativeElement.addEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.addEventListener('mouseup', this.stopDragging.bind(this));
     }
 
     ngOnDestroy()
     {
+        this.elementRef.nativeElement.removeEventListener('dblclick', this.toggleFullScreen.bind(this));
         this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
         clearInterval(this._progressInterval);
