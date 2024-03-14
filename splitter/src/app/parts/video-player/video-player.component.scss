@@ -11,7 +11,6 @@
 .videoContainer {
     border-radius: 8px;
     position: relative;
-    max-width: 750px;
 }
 
 .controlBar {
@@ -19,9 +18,9 @@
     line-height: 35px;
     vertical-align: middle;
     background: rgba(255, 255, 255);
-    width: 100%;
     margin: 0px;
-    position: absolute;
+    position: relative;
+    top: -5px;
     bottom: 0px;
     left: 0px;
     z-index: 1000;
@@ -76,7 +75,6 @@
 .progress-bar {
     height: 100%;
     position: relative;
-    background-color: #2D6494;
     border-radius: 4px;
     display: block;
     z-index: 1500;
@@ -85,7 +83,6 @@
 .progress-bar-buffer {
     height: 100%;
     position: relative;
-    background-color: #b1b1b1;
     border-radius: 4px;
     display: inline-block;
     top: -22px;
@@ -96,7 +93,6 @@
 .progress-knob {
     width: 10px;
     height: 10px;
-    background-color: #2D6494;
     border-radius: 50%;
     position: absolute;
     top: -1px;

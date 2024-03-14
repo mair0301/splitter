@@ -1,4 +1,4 @@
-<div class="custom-video-player">
+<div class="custom-video-player" [style.width]="width">
     <div class="videoContainer" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
         <video class="videoPlayerMain" #videoPlayer (click)="togglePlayPause()">
             <source src="../assets/nexus.mp4" type="video/mp4">

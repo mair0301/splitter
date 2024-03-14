@@ -25,6 +25,9 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
     public fontColor: string = "#4C8BB6";
 
     @Input()
+    public width: string = "750px";
+
+    @Input()
     public backColor: string = "#ffffff";
 
     @Input()
@@ -43,6 +46,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
     private _isDragging: boolean = false;
     private _lastVolume: number = 10;
     private _progressInterval: any;
+
+    private readonly BASE_WIDTH = this.width;
 
     public getPlayPauseButtonText = () => this.isPlaying ? 'pause' : 'play_arrow';
     public getFullscreenIcon = () => this.isFullScreen ? 'fullscreen_exit' : 'fullscreen';
@@ -116,23 +121,16 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
 
     toggleFullScreen(): void
     {
-        const elem = this.videoPlayer.nativeElement as any;
         if (!this.isFullScreen)
         {
-            if (elem.requestFullscreen)
-            {
-                elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen)
-            {
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen)
-            {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen)
-            {
-                elem.msRequestFullscreen();
-            }
+            this.width = '98vw';
+            this.videoPlayer.nativeElement.style.height = 'auto';
+        } else
+        {
+            this.width = this.BASE_WIDTH;
+            this.videoPlayer.nativeElement.style.height = 'auto';
         }
+        this.isFullScreen = !this.isFullScreen;
     }
 
     toggleMuteVideo()
@@ -186,17 +184,12 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngOnInit()
     {
-        console.log("this.videoPlayer.nativeElement");
-        // this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement?.duration ?? 0);
-
-        // document.addEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.addEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.addEventListener('mouseup', this.stopDragging.bind(this));
     }
 
     ngOnDestroy()
     {
-        // document.removeEventListener('fullscreenchange', this.handleFullscreenChange.bind(this));
         this.elementRef.nativeElement.removeEventListener('mousemove', this.dragProgress.bind(this));
         this.elementRef.nativeElement.removeEventListener('mouseup', this.stopDragging.bind(this));
         clearInterval(this._progressInterval);
@@ -206,19 +199,6 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit
     {
         this.videoDuration = this.getFormattedTime(this.videoPlayer.nativeElement.duration);
     }
-
-    handleFullscreenChange()
-    {
-        // this.isFullScreen = !!document.fullscreenElement;
-        // if (this.isFullScreen)
-        // {
-        //     this.showControls = false;
-        // } else
-        // {
-        //     this.showControls = true;
-        // }
-    }
-
 
     updateProgressBar()
     {
