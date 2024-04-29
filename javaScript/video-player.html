@@ -138,18 +138,18 @@
                         <div class="progress-knob"></div>
                     </div>
 
-                    <div class="progress-bar-buffer" style="width: 20%;"></div>
+                    <div class="progress-bar-buffer" style="width: 50%;"></div>
                 </div>
 
-                <div>
+                <div id="controlButtonBar">
                     <div style="display: inline-block">
                         <mat-icon id="playPauseIcon" class="groupActionButton">P</mat-icon>
                         <mat-icon id="volumeIcon" class="groupActionButton">V</mat-icon>
                     </div>
 
                     <div class="buttonGroup">
-                        <span id="skipForward" class="groupActionButton">+</span>
                         <span id="skipBackward" class="groupActionButton">-</span>
+                        <span id="skipForward" class="groupActionButton">+</span>
                     </div>
 
                     <div class="buttonGroup">
@@ -184,6 +184,7 @@
         let volumeSlider = document.getElementById('volumeSlider');
         let skipForward = document.getElementById('skipForward');
         let skipBackward = document.getElementById('skipBackward');
+        let controlButtonBar = document.getElementById('controlButtonBar');
 
         let isPlaying = false;
         let volume = 0.25;
@@ -264,12 +265,15 @@
 
         function onMouseEnter()
         {
-            // Show controls
+            controlButtonBar.style.display = "block";
         }
 
         function onMouseLeave()
         {
-            // Hide controls
+            setTimeout(() =>
+            {
+                controlButtonBar.style.display = "none";
+            }, 1000)
         }
 
         function updateProgressBar()
@@ -281,12 +285,6 @@
 
         async function setFullscreen(fullscreenState)
         {
-            console.log("fullscreen", fullscreenState)
-            if (this.client == Client.WebClient)
-            {
-                await this._domAction.closeOrRequestFullscreen();
-            }
-
             const mediaElement = this._domAction.mediaElement;
 
             if (fullscreenState)
@@ -344,7 +342,7 @@
 
         function startDragging(event)
         {
-            // Set dragging flag
+
         }
 
         function dragProgress(event)
@@ -373,6 +371,7 @@
             volumeSlider = document.getElementById('volumeSlider');
             skipForward = document.getElementById('skipForward');
             skipBackward = document.getElementById('skipBackward');
+            controlButtonBar = document.getElementById('controlButtonBar');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
