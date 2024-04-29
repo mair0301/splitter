@@ -300,7 +300,8 @@
         function updateProgressBar()
         {
             const progressPercent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
-            currentTimeLabel.innerHTML = Math.round(videoPlayer.currentTime);
+            currentTimeLabel.innerHTML = secondsToDisplayableTime(videoPlayer.currentTime);
+            wholeTimeLabel.innerHTML = secondsToDisplayableTime(videoPlayer.duration);
             progessBarLine.style.width = `${progressPercent}%`;
             progessBarKnob.style.left = `${progressPercent}%`;
             progessBarBuffer.style.widows = Math.min(100, progressPercent + 5);
@@ -386,6 +387,40 @@
         function stopDragging()
         {
             isDragging = false;
+        }
+
+        function secondsToDisplayableTime(seconds)
+        {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var restSeconds = Math.round(seconds % 60); // Runden auf ganze Sekunden
+
+            var timeString = '';
+
+            if (hours > 0)
+            {
+                timeString += hours + ':';
+            }
+
+            if (minutes < 10)
+            {
+                timeString += '0' + minutes;
+            } else
+            {
+                timeString += minutes;
+            }
+
+            timeString += ':';
+
+            if (restSeconds < 10)
+            {
+                timeString += '0' + restSeconds;
+            } else
+            {
+                timeString += restSeconds;
+            }
+
+            return timeString;
         }
 
         document.addEventListener("DOMContentLoaded", function ()
