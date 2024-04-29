@@ -416,6 +416,7 @@
             progressBar.addEventListener('mousedown', startDragging)
             progressBar.addEventListener('mousemove', dragProgress)
             progressBar.addEventListener('mouseleave', stopDragging)
+            progressBar.addEventListener('mouseup', stopDragging)
             playPauseIcon.addEventListener('click', togglePlayPause);
             volumeIcon.addEventListener('click', setFullscreen);
             muteIcon.addEventListener('click', toggleMuteVideo);
