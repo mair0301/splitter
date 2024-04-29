@@ -130,7 +130,7 @@
             </video>
 
             <div class="videoInfo" id="coverPlayPause">
-                <mat-icon class="groupActionButton" style="font-size: 32px;">[Play/Pause Icon]</mat-icon>
+                <span id="coverPlayPauseSpan" class="groupActionButton" style="font-size: 32px;"></span>
             </div>
 
             <div class="controlBar">
@@ -191,6 +191,7 @@
         let progessBarLine = document.getElementById('progessBarLine');
         let progessBarBuffer = document.getElementById('progessBarBuffer')
         let coverPlayPause = document.getElementById('coverPlayPause');
+        let coverPlayPauseSpan = document.getElementById('coverPlayPauseSpan');
 
         let isPlaying = false;
         let isDragging = false;
@@ -204,12 +205,15 @@
                 videoPlayer.play();
                 isPlaying = true;
                 playPauseIcon.textContent = 'pause';
+                coverPlayPauseSpan.textContent = 'play';
                 animateCoveredPlayPauseButton();
-            } else
+            }
+            else
             {
                 videoPlayer.pause();
                 isPlaying = false;
                 playPauseIcon.textContent = 'play';
+                coverPlayPauseSpan.textContent = 'pause';
                 animateCoveredPlayPauseButton();
             }
         }
@@ -394,6 +398,7 @@
             progessBarLine = document.getElementById('progessBarLine');
             progessBarBuffer = document.getElementById('progessBarBuffer')
             coverPlayPause = document.getElementById('coverPlayPause');
+            coverPlayPauseSpan = document.getElementById('coverPlayPauseSpan');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
