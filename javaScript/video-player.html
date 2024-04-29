@@ -79,6 +79,7 @@
             position: relative;
             border-radius: 4px;
             display: block;
+            background: rgb(204, 204, 204);
             z-index: 1500;
         }
 
@@ -87,7 +88,7 @@
             position: relative;
             border-radius: 4px;
             display: inline-block;
-            top: -22px;
+            background: darkgray;
             margin-left: 2px;
             z-index: 995;
         }
@@ -99,6 +100,7 @@
             position: absolute;
             top: -1px;
             z-index: 999;
+            background: rgb(204, 204, 204);
             transform: translateX(-50%);
         }
 
@@ -127,18 +129,18 @@
                 Your browser does not support the video tag.
             </video>
 
-            <div class="videoInfo" style="display: none;">
+            <div class="videoInfo" id="coverPlayPause">
                 <mat-icon class="groupActionButton" style="font-size: 32px;">[Play/Pause Icon]</mat-icon>
             </div>
 
             <div class="controlBar">
                 <div style="width: 100%; height: 6px;">
-                    <div class="progress-bar-container">
-                        <div class="progress-bar"></div>
-                        <div class="progress-knob"></div>
+                    <div class="progress-bar-container" id="progressBar">
+                        <div id="progessBarLine" class="progress-bar"></div>
+                        <div id="progessBarKnob" class="progress-knob"></div>
                     </div>
 
-                    <div class="progress-bar-buffer" style="width: 50%;"></div>
+                    <div id="progessBarBuffer" class="progress-bar-buffer"></div>
                 </div>
 
                 <div id="controlButtonBar">
@@ -185,8 +187,13 @@
         let skipForward = document.getElementById('skipForward');
         let skipBackward = document.getElementById('skipBackward');
         let controlButtonBar = document.getElementById('controlButtonBar');
+        let progressBar = document.getElementById('progressBar');
+        let progessBarLine = document.getElementById('progessBarLine');
+        let progessBarBuffer = document.getElementById('progessBarBuffer')
+        let coverPlayPause = document.getElementById('coverPlayPause');
 
         let isPlaying = false;
+        let isDragging = false;
         let volume = 0.25;
 
         function togglePlayPause()
@@ -196,12 +203,24 @@
                 videoPlayer.play();
                 isPlaying = true;
                 playPauseIcon.textContent = 'pause';
+                animateCoveredPlayPauseButton();
             } else
             {
                 videoPlayer.pause();
                 isPlaying = false;
                 playPauseIcon.textContent = 'play';
+                animateCoveredPlayPauseButton();
             }
+        }
+
+        function animateCoveredPlayPauseButton()
+        {
+            this.coverPlayPause.style.display = "block";
+
+            setTimeout(() =>
+            {
+                this.coverPlayPause.style.display = "none";
+            }, 2500)
         }
 
         function toggleFullScreen()
@@ -280,7 +299,9 @@
         {
             const progressPercent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
             currentTimeLabel.innerHTML = Math.round(videoPlayer.currentTime);
-            wholeTimeLabel.innerHTML = videoPlayer.duration;
+            progessBarLine.style.width = `${progressPercent}%`;
+            progessBarKnob.style.left = `${progressPercent}%`;
+            progessBarBuffer.style.widows = Math.min(100, progressPercent + 5);
         }
 
         async function setFullscreen(fullscreenState)
@@ -342,20 +363,19 @@
 
         function startDragging(event)
         {
-
+            isDragging = true;
         }
 
         function dragProgress(event)
         {
-            if (isDragging)
-            {
-                // Update progress bar based on mouse position
-            }
+
+            seekVideo(event)
+
         }
 
         function stopDragging()
         {
-            // Clear dragging flag
+            isDragging = false;
         }
 
         document.addEventListener("DOMContentLoaded", function ()
@@ -372,12 +392,17 @@
             skipForward = document.getElementById('skipForward');
             skipBackward = document.getElementById('skipBackward');
             controlButtonBar = document.getElementById('controlButtonBar');
+            progressBar = document.getElementById('progressBar')
+            progessBarLine = document.getElementById('progessBarLine');
+            progessBarBuffer = document.getElementById('progessBarBuffer')
+            coverPlayPause = document.getElementById('coverPlayPause');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
             videoPlayer.addEventListener('mouseleave', onMouseLeave);
             videoPlayer.addEventListener('click', togglePlayPause);
             videoP.addEventListener('onclick', togglePlayPause)
+            progressBar.addEventListener('mousedown', dragProgress)
             playPauseIcon.addEventListener('click', togglePlayPause);
             volumeIcon.addEventListener('click', setFullscreen);
             muteIcon.addEventListener('click', toggleMuteVideo);
