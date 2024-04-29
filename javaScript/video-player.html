@@ -366,13 +366,21 @@
         function startDragging(event)
         {
             isDragging = true;
+            dragProgress(event);
         }
 
         function dragProgress(event)
         {
-
-            seekVideo(event)
-
+            if (isDragging)
+            {
+                const progressBar = document.querySelector('.progress-bar-container');
+                const rect = progressBar.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                let percentage = (x / rect.width) * 100;
+                percentage = Math.max(0, Math.min(100, percentage));
+                this.progress = percentage;
+                videoPlayer.currentTime = (percentage * videoPlayer.duration) / 100;
+            }
         }
 
         function stopDragging()
@@ -405,7 +413,9 @@
             videoPlayer.addEventListener('mouseleave', onMouseLeave);
             videoPlayer.addEventListener('click', togglePlayPause);
             videoP.addEventListener('onclick', togglePlayPause)
-            progressBar.addEventListener('mousedown', dragProgress)
+            progressBar.addEventListener('mousedown', startDragging)
+            progressBar.addEventListener('mousemove', dragProgress)
+            progressBar.addEventListener('mouseleave', stopDragging)
             playPauseIcon.addEventListener('click', togglePlayPause);
             volumeIcon.addEventListener('click', setFullscreen);
             muteIcon.addEventListener('click', toggleMuteVideo);
