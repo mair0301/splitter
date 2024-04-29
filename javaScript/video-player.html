@@ -194,7 +194,8 @@
 
         let isPlaying = false;
         let isDragging = false;
-        let volume = 0.25;
+        let isMuted = false;
+        let videoVolume = 0;
 
         function togglePlayPause()
         {
@@ -239,27 +240,27 @@
 
         function toggleMuteVideo()
         {
-            if (videoPlayer.muted)
+            if (isMuted)
             {
-                videoPlayer.muted = false;
-                setVolume(0)
+                isMuted = false;
+                setVolume(videoVolume)
             }
             else
             {
-                videoPlayer.muted = true;
-                setVolume(volume)
+                isMuted = true;
+                setVolume(0);
             }
         }
 
         function setVolume(volume)
         {
             videoPlayer.volume = volume / 100;
-            volume = volume
             muteVolumeLabel.innerHTML = volume;
         }
 
         function onVolumeChanged(event)
         {
+            videoVolume = event.target.value;
             setVolume(event.target.value);
         }
 
@@ -289,10 +290,7 @@
 
         function onMouseLeave()
         {
-            setTimeout(() =>
-            {
-                controlButtonBar.style.display = "none";
-            }, 1000)
+            controlButtonBar.style.display = "block";
         }
 
         function updateProgressBar()
