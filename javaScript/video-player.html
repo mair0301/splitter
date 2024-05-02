@@ -6,7 +6,6 @@
         }
 
         .slider::-moz-range-progress {
-            background-color: currentColor;
             border: rgb(140, 178, 211);
         }
 
@@ -427,6 +426,7 @@
         {
             videoPlayer.volume = volume / 100;
             muteVolumeLabel.innerHTML = volume;
+            volumeSlider.value = volume;
         }
 
         function onVolumeChanged(event)
