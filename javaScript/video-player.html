@@ -141,9 +141,17 @@
             <div class="videoInfo" id="coverPlayPause">
                 <span id="coverPlayPauseSpan" class="groupActionButton" style="font-size: 32px;"></span>
 
-                <svg id="coverPlayPauseSpan" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <svg id="coverPlayIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g id="Ebene_3" data-name="Ebene 3">
                         <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45, 63, 165)" />
+                    </g>
+                    <rect x="-0.0614" width="24" height="24" style="fill:none" />
+                </svg>
+
+                <svg id="coverPauseIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g id="Ebene_2" data-name="Ebene 2">
+                        <rect x="5.9386" y="5" width="4" height="14" style="fill:rgb(44, 80, 177)" />
+                        <rect x="13.9386" y="5" width="4" height="14" style="fill: rgb(44, 80, 177)" />
                     </g>
                     <rect x="-0.0614" width="24" height="24" style="fill:none" />
                 </svg>
@@ -217,7 +225,8 @@
     <script>
         let videoPlayer = document.getElementById('videoPlayer');
         let videoP = document.getElementById('videoP');
-        let playPauseIcon = document.getElementById('playPauseIcon');
+        let coverPlayIcon = document.getElementById('coverPlayIcon');
+        let coverPauseIcon = document.getElementById('coverPauseIcon');
         let playIcon = document.getElementById('playIcon');
         let pauseIcon = document.getElementById('pauseIcon');
         let volumeIcon = document.getElementById('volumeIcon');
@@ -247,7 +256,9 @@
                 videoPlayer.play();
                 isPlaying = true;
                 playIcon.style.display = 'none';
+                coverPlayIcon.style.display = 'inline-block';
                 pauseIcon.style.display = 'inline-block';
+                coverPauseIcon.style.display = 'none';
                 animateCoveredPlayPauseButton();
             }
             else
@@ -255,7 +266,9 @@
                 videoPlayer.pause();
                 isPlaying = false;
                 playIcon.style.display = 'inline-block';
+                coverPlayIcon.style.display = 'none';
                 pauseIcon.style.display = 'none';
+                coverPauseIcon.style.display = 'inline-block';
                 animateCoveredPlayPauseButton();
             }
         }
@@ -450,12 +463,17 @@
             coverPlayPauseSpan = document.getElementById('coverPlayPauseSpan');
             playIcon = document.getElementById('playIcon');
             pauseIcon = document.getElementById('pauseIcon');
+            coverPlayIcon = document.getElementById('coverPlayIcon');
+            coverPauseIcon = document.getElementById('coverPauseIcon');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
             videoPlayer.addEventListener('mouseleave', onMouseLeave);
             videoPlayer.addEventListener('click', togglePlayPause);
             playIcon.addEventListener('click', togglePlayPause);
+            coverPlayIcon.addEventListener('click', togglePlayPause);
+            coverPauseIcon.addEventListener('click', togglePlayPause);
+
             pauseIcon.addEventListener('click', togglePlayPause);
             videoP.addEventListener('onclick', togglePlayPause)
             progressBar.addEventListener('mousedown', startDragging)
