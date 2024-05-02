@@ -1,5 +1,13 @@
 <head>
     <style>
+        #volumeSlider input[type="range"] {
+            background-color: #1b32b9;
+        }
+
+        #volumeSlider input[type="range"]::-webkit-slider-thumb {
+            background-color: #f00;
+        }
+
         .custom-video-player {
             user-select: none;
         }
@@ -16,8 +24,8 @@
         }
 
         .controlBar {
-            height: 35px;
-            line-height: 35px;
+            height: 40px;
+            line-height: 40px;
             vertical-align: middle;
             background: rgba(255, 255, 255);
             margin: 0px;
@@ -32,7 +40,8 @@
             font-size: 16px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: 600;
-            color: RGB(45, 100, 148);
+            vertical-align: middle;
+            color: rgb(45, 100, 148);
         }
 
         .videoCoverIcon {
@@ -70,9 +79,9 @@
         }
 
         .baseLabel {
-            height: 26px;
-            line-height: 26px;
-            vertical-align: top;
+            height: 36px;
+            line-height: 36px;
+            vertical-align: middle;
         }
 
         .groupActionButton {
@@ -81,6 +90,7 @@
             height: 28px;
             width: 28px;
             display: inline-block;
+            vertical-align: middle;
             cursor: pointer;
         }
 
@@ -137,7 +147,7 @@
             align-items: center;
             line-height: 6px;
             color: rgb(45, 100, 148);
-            vertical-align: top;
+            vertical-align: middle;
         }
 
         .slider {
@@ -233,7 +243,7 @@
                     </div>
 
                     <div class="volumeButtonGroup">
-                        <svg id="muteIcon" class="baseLabel" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M0,0H24V24H0Z" style="fill:none" />
                             <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
                         </svg>
@@ -242,7 +252,7 @@
                             <input type="range" class="slider" min="0" max="100" step="1">
                         </div>
 
-                        <span id="muteVolumeLabel" class="baseLabel" style="margin: 0 0.75rem"></span>
+                        <span id="muteVolumeLabel" class="baseLabel labelContainer" style="margin: 0 0.75rem"></span>
                     </div>
                 </div>
             </div>
@@ -510,6 +520,9 @@
             volumeSlider.addEventListener('change', onVolumeChanged)
             skipForward.addEventListener('click', skipForwardFunc)
             skipBackward.addEventListener('click', skipBackwardFunc)
+
+            pauseIcon.style.display = 'none';
+            coverPlayIcon.style.display = 'none';
 
             document.addEventListener('fullscreenchange', function (event)
             {
