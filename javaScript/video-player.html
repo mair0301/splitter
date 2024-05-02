@@ -134,12 +134,19 @@
     <div class="custom-video-player" style="width: 50%;">
         <div class="videoContainer">
             <video class="videoPlayerMain" id="videoPlayer">
-                <source type="video/mp4" id="videoP">
+                <source src="../splitter/src/assets/nexus.mp4" type="video/mp4" id="videoP">
                 Your browser does not support the video tag.
             </video>
 
             <div class="videoInfo" id="coverPlayPause">
                 <span id="coverPlayPauseSpan" class="groupActionButton" style="font-size: 32px;"></span>
+
+                <svg id="coverPlayPauseSpan" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g id="Ebene_3" data-name="Ebene 3">
+                        <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45, 63, 165)" />
+                    </g>
+                    <rect x="-0.0614" width="24" height="24" style="fill:none" />
+                </svg>
             </div>
 
             <div class="controlBar">
@@ -153,14 +160,35 @@
                 </div>
 
                 <div id="controlButtonBar">
-                    <div style="display: inline-block">
-                        <mat-icon id="playPauseIcon" class="groupActionButton">P</mat-icon>
+                    <div class="buttonGroup">
+                        <svg id="playIcon" class="groupActionButton" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g id="Ebene_3" data-name="Ebene 3">
+                                <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45, 63, 165)" />
+                            </g>
+                            <rect x="-0.0614" width="24" height="24" style="fill:none" />
+                        </svg>
+
+                        <svg id="pauseIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g id="Ebene_2" data-name="Ebene 2">
+                                <rect x="5.9386" y="5" width="4" height="14" style="fill:rgb(44, 80, 177)" />
+                                <rect x="13.9386" y="5" width="4" height="14" style="fill: rgb(44, 80, 177)" />
+                            </g>
+                            <rect x="-0.0614" width="24" height="24" style="fill:none" />
+                        </svg>
+
                         <mat-icon id="volumeIcon" class="groupActionButton">V</mat-icon>
                     </div>
 
                     <div class="buttonGroup">
-                        <span id="skipBackward" class="groupActionButton">-</span>
-                        <span id="skipForward" class="groupActionButton">+</span>
+                        <svg id="skipBackward" class="groupActionButton" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 12 12" style="enable-background:new 0 0 12 12;" xml:space="preserve">
+                            <path fill="rgb(44, 80, 177)" d="M 4,6 9,6 9,7 4,7 Z" />
+                        </svg>
+
+                        <svg version="1.1" id="skipForward" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 12 12" style="enable-background:new 0 0 12 12;" xml:space="preserve">
+                            <path fill="rgb(44, 80, 177)" d="M 4,6 6,6 6,4 7,4 7,6 9,6 9,7 7,7 7,9 6,9 6,7 4,7 Z" />
+                        </svg>
                     </div>
 
                     <div class="buttonGroup">
@@ -170,7 +198,10 @@
                     </div>
 
                     <div class="volumeButtonGroup">
-                        <span id="muteIcon" class="baseLabel" style="margin-right: 0.5rem;">M</span>
+                        <svg id="muteIcon" class="baseLabel" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M0,0H24V24H0Z" style="fill:none" />
+                            <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(49, 103, 165)" />
+                        </svg>
 
                         <div class="slider-container" id="volumeSlider">
                             <input type="range" class="slider" min="0" max="100" step="1">
@@ -187,6 +218,8 @@
         let videoPlayer = document.getElementById('videoPlayer');
         let videoP = document.getElementById('videoP');
         let playPauseIcon = document.getElementById('playPauseIcon');
+        let playIcon = document.getElementById('playIcon');
+        let pauseIcon = document.getElementById('pauseIcon');
         let volumeIcon = document.getElementById('volumeIcon');
         let currentTimeLabel = document.getElementById('currentTimeLabel');
         let wholeTimeLabel = document.getElementById('wholeTimeLabel');
@@ -213,16 +246,16 @@
             {
                 videoPlayer.play();
                 isPlaying = true;
-                playPauseIcon.textContent = 'pause';
-                coverPlayPauseSpan.textContent = 'play';
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'inline-block';
                 animateCoveredPlayPauseButton();
             }
             else
             {
                 videoPlayer.pause();
                 isPlaying = false;
-                playPauseIcon.textContent = 'play';
-                coverPlayPauseSpan.textContent = 'pause';
+                playIcon.style.display = 'inline-block';
+                pauseIcon.style.display = 'none';
                 animateCoveredPlayPauseButton();
             }
         }
@@ -415,11 +448,15 @@
             progessBarBuffer = document.getElementById('progessBarBuffer')
             coverPlayPause = document.getElementById('coverPlayPause');
             coverPlayPauseSpan = document.getElementById('coverPlayPauseSpan');
+            playIcon = document.getElementById('playIcon');
+            pauseIcon = document.getElementById('pauseIcon');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
             videoPlayer.addEventListener('mouseleave', onMouseLeave);
             videoPlayer.addEventListener('click', togglePlayPause);
+            playIcon.addEventListener('click', togglePlayPause);
+            pauseIcon.addEventListener('click', togglePlayPause);
             videoP.addEventListener('onclick', togglePlayPause)
             progressBar.addEventListener('mousedown', startDragging)
             progressBar.addEventListener('mousemove', dragProgress)
