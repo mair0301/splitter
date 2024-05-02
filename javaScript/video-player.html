@@ -1,11 +1,93 @@
 <head>
     <style>
-        #volumeSlider input[type="range"] {
-            background-color: #1b32b9;
+        .slider {
+            border-radius: 25px;
+            outline: none;
         }
 
-        #volumeSlider input[type="range"]::-webkit-slider-thumb {
-            background-color: #f00;
+        .slider::-moz-range-progress {
+            background-color: currentColor;
+            border: rgb(140, 178, 211);
+        }
+
+        .audioDiv {
+            display: inline-block;
+        }
+
+        .slider.audio:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background: rgb(45, 100, 148) !important;
+            border-radius: 8px;
+        }
+
+        .audio.slider::-webkit-slider-thumb {
+            width: 10px;
+            height: 10px;
+        }
+
+        .time.slider::-webkit-slider-thumb {
+            margin-top: -5px;
+        }
+
+        .slider::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            background: transparent;
+            height: 10px;
+        }
+
+        .audio.slider::-webkit-slider-runnable-track {
+            height: 10px !important;
+            width: 100%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: rgba(140, 178, 211, 0.548) !important;
+            background-image: linear-gradient(currentColor, currentColor) !important;
+            background-repeat: no-repeat !important;
+            background-size: 0% 100% !important;
+            padding: 0px 0px !important;
+        }
+
+        .audio.slider[type='range'] {
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 0px;
+            margin: 0px;
+            background-color: white;
+            width: 100px;
+            top: calc(50% - 12px);
+            left: -19px;
+            height: 4px;
+            color: inherit;
+        }
+
+        .slider::-moz-range-thumb {
+            width: var(--slider-size);
+            height: var(--slider-size);
+            background: currentColor;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            border-radius: 30px;
+        }
+
+        .audio.slider::-moz-range-thumb {
+            width: 4px;
+            height: 4px;
+        }
+
+        .audio.slider::-moz-range-progress {
+            height: 4px;
+            border-radius: 30px;
         }
 
         .custom-video-player {
@@ -46,7 +128,7 @@
 
         .videoCoverIcon {
             position: absolute;
-            margin-top: 6px;
+            margin-top: 7px;
             margin-left: 10px !important;
         }
 
@@ -248,9 +330,17 @@
                             <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
                         </svg>
 
-                        <div class="slider-container" id="volumeSlider">
+                        <!-- <div class="slider-container" id="volumeSlider">
                             <input type="range" class="slider" min="0" max="100" step="1">
+                        </div> -->
+
+                        <div class="audioDiv">
+                            <!-- <div id="audioIconParent" class="icon audio" style="background-size: 100% 0% !important"></div> -->
+
+                            <input id="volumeSlider" type="range" min="0" max="100" value="0" class="audio slider"
+                                oninput="onVolumeSliderInput(this)">
                         </div>
+
 
                         <span id="muteVolumeLabel" class="baseLabel labelContainer" style="margin: 0 0.75rem"></span>
                     </div>
