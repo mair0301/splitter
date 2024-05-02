@@ -237,20 +237,6 @@
             }, 2500)
         }
 
-        function toggleFullScreen()
-        {
-            if (!document.fullscreenElement)
-            {
-                videoPlayer.requestFullscreen();
-            } else
-            {
-                if (document.exitFullscreen)
-                {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
         function toggleMuteVideo()
         {
             if (isMuted)
