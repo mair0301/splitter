@@ -47,13 +47,16 @@
         }
 
         input[type=range] {
-            -webkit-appearance: none;
             width: 100%;
             background: rgba(140, 178, 211, 0.548) !important;
             background-image: linear-gradient(currentColor, currentColor) !important;
             background-repeat: no-repeat !important;
             background-size: 0% 100% !important;
             padding: 0px 0px !important;
+        }
+
+        .audioPlayerMain {
+            width: 100%;
         }
 
         .audio.slider[type='range'] {
@@ -249,6 +252,10 @@
                 Your browser does not support the video tag.
             </video>
 
+            <audio class="audioPlayerMain" id="audioPlayer" controls>
+                <source type="audio/mpeg" id="audioP">
+            </audio>
+
             <div class="videoInfo" id="coverPlayPause">
                 <svg id="coverPlayIcon" class="groupActionButton videoCoverIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g id="Ebene_3" data-name="Ebene 3">
@@ -368,6 +375,7 @@
         let progessBarLine = document.getElementById('progessBarLine');
         let progessBarBuffer = document.getElementById('progessBarBuffer')
         let coverPlayPause = document.getElementById('coverPlayPause');
+        let audioPlayer = document.getElementById('audioPlayer');
 
         let isPlaying = false;
         let isDragging = false;
@@ -492,12 +500,14 @@
         {
             videoPlayer.src = videoURI;
             videoPlayer.load();
+            audioPlayer.style.display = 'none';
         }
 
         function setAudioSrc(videoURI)
         {
-            videoPlayer.src = videoURI;
-            videoPlayer.load();
+            audioPlayer.src = videoURI;
+            audioPlayer.load();
+            videoPlayer.style.display = 'none';
         }
 
         function seekVideo(event)
@@ -590,6 +600,7 @@
             pauseIcon = document.getElementById('pauseIcon');
             coverPlayIcon = document.getElementById('coverPlayIcon');
             coverPauseIcon = document.getElementById('coverPauseIcon');
+            audioPlayer = document.getElementById('audioPlayer');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
