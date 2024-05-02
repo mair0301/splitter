@@ -245,16 +245,12 @@
 </head>
 
 <body>
-    <div class="custom-video-player" style="width: 75%;">
-        <div class="videoContainer">
+    <div class="custom-video-player" style="width: 100%;">
+        <div id="videoContainer" class="videoContainer">
             <video class="videoPlayerMain" id="videoPlayer">
                 <source src="../splitter/src/assets/nexus.mp4" type="video/mp4" id="videoP">
                 Your browser does not support the video tag.
             </video>
-
-            <audio class="audioPlayerMain" id="audioPlayer" controls>
-                <source type="audio/mpeg" id="audioP">
-            </audio>
 
             <div class="videoInfo" id="coverPlayPause">
                 <svg id="coverPlayIcon" class="groupActionButton videoCoverIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -353,6 +349,12 @@
                 </div>
             </div>
         </div>
+
+        <div id="audioContainer" class="audioContainer">
+            <audio class="audioPlayerMain" id="audioPlayer" controls>
+                <source type="audio/mpeg" id="audioP">
+            </audio>
+        </div>
     </div>
 
     <script>
@@ -376,6 +378,8 @@
         let progessBarBuffer = document.getElementById('progessBarBuffer')
         let coverPlayPause = document.getElementById('coverPlayPause');
         let audioPlayer = document.getElementById('audioPlayer');
+        let videoContainer = document.getElementById('videoContainer')
+        let audioContainer = document.getElementById('audioContainer')
 
         let isPlaying = false;
         let isDragging = false;
@@ -500,14 +504,14 @@
         {
             videoPlayer.src = videoURI;
             videoPlayer.load();
-            audioPlayer.style.display = 'none';
+            audioContainer.style.display = 'none';
         }
 
         function setAudioSrc(videoURI)
         {
             audioPlayer.src = videoURI;
             audioPlayer.load();
-            videoPlayer.style.display = 'none';
+            videoContainer.style.display = 'none';
         }
 
         function seekVideo(event)
@@ -601,6 +605,8 @@
             coverPlayIcon = document.getElementById('coverPlayIcon');
             coverPauseIcon = document.getElementById('coverPauseIcon');
             audioPlayer = document.getElementById('audioPlayer');
+            videoContainer = document.getElementById('videoContainer')
+            audioContainer = document.getElementById('audioContainer')
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
