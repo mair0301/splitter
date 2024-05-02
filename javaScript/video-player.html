@@ -134,7 +134,7 @@
     <div class="custom-video-player" style="width: 50%;">
         <div class="videoContainer">
             <video class="videoPlayerMain" id="videoPlayer">
-                <source src="../splitter/src/assets/nexus.mp4" type="video/mp4" id="videoP">
+                <source type="video/mp4" id="videoP">
                 Your browser does not support the video tag.
             </video>
 
@@ -316,35 +316,16 @@
             }
         }
 
-        function setVideoURI(videoURI)
+        function setVideoSrc(videoURI)
         {
-            try
-            {
-                console.log("uri", videoURI);
+            videoPlayer.src = videoURI;
+            videoPlayer.load();
+        }
 
-                const mediaElement = this._domAction.mediaElement;
-
-                const sourceElement = document.createElement('source');
-                sourceElement.setAttribute('src', videoURI);
-                sourceElement.setAttribute('type', '');
-
-                mediaElement.insertAdjacentElement('afterbegin', sourceElement);
-
-                this._domAction.pauseMedia();
-
-                sourceElement.addEventListener('error', (ev) => this._domAction.writeError('source error occured!', 'source.onerror', JSON.stringify(ev) + '\n' + sourceElement.src));
-
-                mediaElement.addEventListener('error', (ev) => this._domAction.writeError('video error occured!', 'video.onerror', JSON.stringify(ev) + '\n' + this._domAction.mediaElement.src));
-
-                mediaElement.currentTime = 0;
-                mediaElement.volume = this._domAction.volumeValue;
-                this._domAction.updateCurrentTime(false);
-                mediaElement.load();
-            }
-            catch (e)
-            {
-                this._domAction.writeError('setVideoURI error occured!', VideoPlayerControls.name + VideoPlayerControls.prototype.setVideoURI.name);
-            }
+        function setAudioSrc(videoURI)
+        {
+            videoPlayer.src = videoURI;
+            videoPlayer.load();
         }
 
         function seekVideo(event)
@@ -385,7 +366,7 @@
         {
             var hours = Math.floor(seconds / 3600);
             var minutes = Math.floor((seconds % 3600) / 60);
-            var restSeconds = Math.round(seconds % 60); // Runden auf ganze Sekunden
+            var restSeconds = Math.round(seconds % 60);
 
             var timeString = '';
 
