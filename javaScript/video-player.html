@@ -351,6 +351,13 @@
         </div>
 
         <div id="audioContainer" class="audioContainer">
+            <div style="display: flex; justify-content: center; align-items: center;width: 100%; height: 100%; max-height: 80vh;">
+                <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem; height: 33%; width: 33%;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0,0H24V24H0Z" style="fill:none" />
+                    <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
+                </svg>
+            </div>
+
             <audio class="audioPlayerMain" id="audioPlayer" controls>
                 <source type="audio/mpeg" id="audioP">
             </audio>
@@ -384,29 +391,56 @@
         let isPlaying = false;
         let isDragging = false;
         let isMuted = false;
+        let isAudio = false;
         let videoVolume = 0;
 
         function togglePlayPause()
         {
-            if (videoPlayer.paused)
+            if (isAudio)
             {
-                videoPlayer.play();
-                isPlaying = true;
-                playIcon.style.display = 'none';
-                coverPlayIcon.style.display = 'inline-block';
-                pauseIcon.style.display = 'inline-block';
-                coverPauseIcon.style.display = 'none';
-                animateCoveredPlayPauseButton();
+                if (audioPlayer.paused)
+                {
+                    videoPlayer.play();
+                    isPlaying = true;
+                    playIcon.style.display = 'none';
+                    coverPlayIcon.style.display = 'inline-block';
+                    pauseIcon.style.display = 'inline-block';
+                    coverPauseIcon.style.display = 'none';
+                    animateCoveredPlayPauseButton();
+                }
+                else
+                {
+                    audioPlayer.pause();
+                    isPlaying = false;
+                    playIcon.style.display = 'inline-block';
+                    coverPlayIcon.style.display = 'none';
+                    pauseIcon.style.display = 'none';
+                    coverPauseIcon.style.display = 'inline-block';
+                    animateCoveredPlayPauseButton();
+                }
             }
             else
             {
-                videoPlayer.pause();
-                isPlaying = false;
-                playIcon.style.display = 'inline-block';
-                coverPlayIcon.style.display = 'none';
-                pauseIcon.style.display = 'none';
-                coverPauseIcon.style.display = 'inline-block';
-                animateCoveredPlayPauseButton();
+                if (videoPlayer.paused)
+                {
+                    videoPlayer.play();
+                    isPlaying = true;
+                    playIcon.style.display = 'none';
+                    coverPlayIcon.style.display = 'inline-block';
+                    pauseIcon.style.display = 'inline-block';
+                    coverPauseIcon.style.display = 'none';
+                    animateCoveredPlayPauseButton();
+                }
+                else
+                {
+                    videoPlayer.pause();
+                    isPlaying = false;
+                    playIcon.style.display = 'inline-block';
+                    coverPlayIcon.style.display = 'none';
+                    pauseIcon.style.display = 'none';
+                    coverPauseIcon.style.display = 'inline-block';
+                    animateCoveredPlayPauseButton();
+                }
             }
         }
 
@@ -449,11 +483,22 @@
 
         function skipVideo(seconds)
         {
-            const currentTime = videoPlayer.currentTime;
-            let newTime = currentTime + seconds;
-            newTime = Math.max(0, Math.min(videoPlayer.duration, newTime));
-            videoPlayer.currentTime = newTime;
-            currentTimeLabel.innerHTML = currentTime;
+            if (isAudio)
+            {
+                const currentTime = audioPlayer.currentTime;
+                let newTime = currentTime + seconds;
+                newTime = Math.max(0, Math.min(audioPlayer.duration, newTime));
+                audioPlayer.currentTime = newTime;
+                currentTimeLabel.innerHTML = currentTime;
+            }
+            else
+            {
+                const currentTime = videoPlayer.currentTime;
+                let newTime = currentTime + seconds;
+                newTime = Math.max(0, Math.min(videoPlayer.duration, newTime));
+                videoPlayer.currentTime = newTime;
+                currentTimeLabel.innerHTML = currentTime;
+            }
         }
 
         function skipForwardFunc()
@@ -502,6 +547,7 @@
 
         function setVideoSrc(videoURI)
         {
+            isAudio = false;
             videoPlayer.src = videoURI;
             videoPlayer.load();
             audioContainer.style.display = 'none';
@@ -509,6 +555,7 @@
 
         function setAudioSrc(videoURI)
         {
+            isAudio = true;
             audioPlayer.src = videoURI;
             audioPlayer.load();
             videoContainer.style.display = 'none';
@@ -639,8 +686,18 @@
 
             document.addEventListener('keydown', function (event)
             {
-                if (event.key == ' ')
-                    togglePlayPause();
+                switch (event.key)
+                {
+                    case ' ':
+                        togglePlayPause();
+                        break;
+                    case 'ArrowRight':
+                        skipVideo(10)
+                        break;
+                    case 'ArrowLeft':
+                        skipVideo(-10);
+                        break;
+                }
             })
         })
     </script>
