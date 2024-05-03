@@ -316,9 +316,14 @@
                     </div>
 
                     <div class="volumeButtonGroup">
-                        <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <svg id="soundIcon" class="groupActionButton" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M0,0H24V24H0Z" style="fill:none" />
                             <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
+                        </svg>
+
+                        <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M0,0H24V24H0Z" style="fill:none" />
+                            <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: none; stroke: rgb(45,100,148); stroke-width: 2px;" />
                         </svg>
 
                         <div class="audioDiv">
@@ -379,6 +384,7 @@
         let audioPlayer = document.getElementById('audioPlayer');
         let videoContainer = document.getElementById('videoContainer')
         let audioContainer = document.getElementById('audioContainer')
+        let soundIcon = document.getElementById('soundIcon')
 
         let isPlaying = false;
         let isDragging = false;
@@ -451,11 +457,15 @@
             if (isMuted)
             {
                 isMuted = false;
+                muteIcon.style.display = "inline-block";
+                soundIcon.style.display = "none";
                 setVolume(videoVolume)
             }
             else
             {
                 isMuted = true;
+                muteIcon.style.display = "none";
+                soundIcon.style.display = "inline-block";
                 setVolume(0);
             }
         }
@@ -646,6 +656,7 @@
             audioPlayer = document.getElementById('audioPlayer');
             videoContainer = document.getElementById('videoContainer')
             audioContainer = document.getElementById('audioContainer')
+            soundIcon = document.getElementById('soundIcon')
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
@@ -662,10 +673,11 @@
             progressBar.addEventListener('mouseleave', stopDragging)
             progressBar.addEventListener('mouseup', stopDragging)
             volumeIcon.addEventListener('click', setFullscreen);
-            muteIcon.addEventListener('click', toggleMuteVideo);
             volumeSlider.addEventListener('change', onVolumeChanged)
             skipForward.addEventListener('click', skipForwardFunc)
             skipBackward.addEventListener('click', skipBackwardFunc)
+            soundIcon.addEventListener('click', toggleMuteVideo);
+            muteIcon.addEventListener('click', toggleMuteVideo);
 
             pauseIcon.style.display = 'none';
             coverPlayIcon.style.display = 'none';
