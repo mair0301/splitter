@@ -350,7 +350,7 @@
         </div>
 
         <div id="audioContainer" class="audioContainer">
-            <div style="display: flex; justify-content: center; align-items: center;width: 100%; height: 100%; max-height: 80vh;">
+            <div id="audioTopContainer" style="display: flex; justify-content: center; align-items: center;width: 100%; height: 100%; max-height: 80vh;">
                 <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem; height: 33%; width: 33%;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M0,0H24V24H0Z" style="fill:none" />
                     <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
@@ -387,6 +387,7 @@
         let videoContainer = document.getElementById('videoContainer')
         let audioContainer = document.getElementById('audioContainer')
         let soundIcon = document.getElementById('soundIcon')
+        let audioTopContainer = document.getElementById('audioTopContainer');
 
         let isPlaying = false;
         let isDragging = false;
@@ -399,17 +400,7 @@
         {
             if (isAudio)
             {
-                if (audioPlayer.paused)
-                {
-                    videoPlayer.play();
-                    isPlaying = true;
-                    playIcon.style.display = 'none';
-                    coverPlayIcon.style.display = 'inline-block';
-                    pauseIcon.style.display = 'inline-block';
-                    coverPauseIcon.style.display = 'none';
-                    animateCoveredPlayPauseButton();
-                }
-                else
+                if (isPlaying)
                 {
                     audioPlayer.pause();
                     isPlaying = false;
@@ -419,10 +410,20 @@
                     coverPauseIcon.style.display = 'inline-block';
                     animateCoveredPlayPauseButton();
                 }
+                else
+                {
+                    audioPlayer.play();
+                    isPlaying = true;
+                    playIcon.style.display = 'none';
+                    coverPlayIcon.style.display = 'inline-block';
+                    pauseIcon.style.display = 'inline-block';
+                    coverPauseIcon.style.display = 'none';
+                    animateCoveredPlayPauseButton();
+                }
             }
             else
             {
-                if (videoPlayer.paused)
+                if (isPlaying)
                 {
                     videoPlayer.play();
                     isPlaying = true;
@@ -677,6 +678,7 @@
             videoContainer = document.getElementById('videoContainer')
             audioContainer = document.getElementById('audioContainer')
             soundIcon = document.getElementById('soundIcon')
+            audioTopContainer = document.getElementById('audioTopContainer');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
@@ -685,6 +687,7 @@
             playIcon.addEventListener('click', togglePlayPause);
             coverPlayIcon.addEventListener('click', togglePlayPause);
             coverPauseIcon.addEventListener('click', togglePlayPause);
+            audioTopContainer.addEventListener('click', togglePlayPause);
 
             pauseIcon.addEventListener('click', togglePlayPause);
             videoP.addEventListener('onclick', togglePlayPause)
