@@ -400,7 +400,7 @@
         {
             if (isAudio)
             {
-                if (audioPlayer.isPlaying)
+                if (isPlaying)
                 {
                     audioPlayer.pause();
                     isPlaying = false;
@@ -738,11 +738,13 @@
             videoPlayer.addEventListener('loadeddata', function ()
             {
                 videoPlayer.play();
+                isPlaying = true;
             });
 
             audioPlayer.addEventListener('loadeddata', function ()
             {
                 audioPlayer.play();
+                isPlaying = true;
             });
         })
     </script>
