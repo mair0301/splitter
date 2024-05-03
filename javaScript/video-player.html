@@ -734,6 +734,16 @@
                 showMouse();
                 mouseTimeout = setTimeout(hideMouse, 3000);
             });
+
+            videoPlayer.addEventListener('loadeddata', function ()
+            {
+                videoPlayer.play();
+            });
+
+            audioPlayer.addEventListener('loadeddata', function ()
+            {
+                audioPlayer.play();
+            });
         })
     </script>
 </body>
