@@ -393,6 +393,7 @@
         let isMuted = false;
         let isAudio = false;
         let videoVolume = 0;
+        let mouseTimeout;
 
         function togglePlayPause()
         {
@@ -606,6 +607,16 @@
             isDragging = false;
         }
 
+        function hideMouse()
+        {
+            document.body.style.cursor = 'none';
+        }
+
+        function showMouse()
+        {
+            document.body.style.cursor = '';
+        }
+
         function secondsToDisplayableTime(seconds)
         {
             var hours = Math.floor(seconds / 3600);
@@ -713,6 +724,13 @@
                         break;
                 }
             })
+
+            document.addEventListener('mousemove', function ()
+            {
+                clearTimeout(mouseTimeout);
+                showMouse();
+                mouseTimeout = setTimeout(hideMouse, 3000);
+            });
         })
     </script>
 </body>
