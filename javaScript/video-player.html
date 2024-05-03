@@ -281,11 +281,18 @@
 
                 <div id="controlButtonBar">
                     <div class="buttonGroup">
+                        <svg id="skipBackward" class="groupActionButton" style="rotate: 180deg;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g>
+                                <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45,100,148)" />
+                            </g>
+                            <rect width="24" height="24" style="fill:none" />
+                        </svg>
+
                         <svg id="playIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g>
                                 <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45,100,148)" />
                             </g>
-                            <rect x="-0.0614" width="24" height="24" style="fill:none" />
+                            <rect width="24" height="24" style="fill:none" />
                         </svg>
 
                         <svg id="pauseIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -296,27 +303,11 @@
                             <rect x="-0.0614" width="24" height="24" style="fill:none" />
                         </svg>
 
-                        <svg id="volumeIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" style="rotate: 45deg;" viewBox="0 0 24 24">
-                            <polyline points="5.5 5.5 18.5 5.5 18.5 18.5 5.5 18.5" style="fill:none" />
+                        <svg id="skipForward" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g>
-                                <path d="M9.0556,7.7778,12,4.8333l2.9444,2.9445,1.4112-1.4222L12,2,7.6444,6.3556Z" style="fill:rgb(45,100,148)" />
-                                <path d="M14.9444,16.2222,12,19.1667,9.0556,16.2222,7.6444,17.6444,12,22l4.3556-4.3556Z" style="fill:rgb(45,100,148)" />
-                                <path d="M16.2222,9.0556,19.1667,12l-2.9445,2.9444,1.4222,1.4112L22,12,17.6444,7.6444Z" style="fill:rgb(45,100,148)" />
-                                <path d="M7.7778,14.9444,4.8333,12,7.7778,9.0556,6.3556,7.6444,2,12l4.3556,4.3556Z" style="fill:rgb(45,100,148)" />
+                                <polygon points="17.037 12 6.037 19 6.037 5 17.037 12" style="fill:rgb(45,100,148)" />
                             </g>
                             <rect width="24" height="24" style="fill:none" />
-                        </svg>
-                    </div>
-
-                    <div class="buttonGroup">
-                        <svg id="skipBackward" class="groupActionButton" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 12 12" style="enable-background:new 0 0 12 12;" xml:space="preserve">
-                            <path fill="rgb(45,100,148)" d="M 4,6 9,6 9,7 4,7 Z" />
-                        </svg>
-
-                        <svg version="1.1" id="skipForward" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 12 12" style="enable-background:new 0 0 12 12;" xml:space="preserve">
-                            <path fill="rgb(45,100,148)" d="M 4,6 6,6 6,4 7,4 7,6 9,6 9,7 7,7 7,9 6,9 6,7 4,7 Z" />
                         </svg>
                     </div>
 
@@ -332,19 +323,22 @@
                             <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
                         </svg>
 
-                        <!-- <div class="slider-container" id="volumeSlider">
-                            <input type="range" class="slider" min="0" max="100" step="1">
-                        </div> -->
-
                         <div class="audioDiv">
-                            <!-- <div id="audioIconParent" class="icon audio" style="background-size: 100% 0% !important"></div> -->
-
-                            <input id="volumeSlider" type="range" min="0" max="100" value="0" class="audio slider"
-                                oninput="onVolumeSliderInput(this)">
+                            <input id="volumeSlider" type="range" min="0" max="100" value="0" class="audio slider">
                         </div>
 
-
                         <span id="muteVolumeLabel" class="baseLabel labelContainer" style="margin: 0 0.75rem"></span>
+
+                        <svg id="volumeIcon" class="groupActionButton" xmlns="http://www.w3.org/2000/svg" style="rotate: 45deg;" viewBox="0 0 24 24">
+                            <polyline points="5.5 5.5 18.5 5.5 18.5 18.5 5.5 18.5" style="fill:none" />
+                            <g>
+                                <path d="M9.0556,7.7778,12,4.8333l2.9444,2.9445,1.4112-1.4222L12,2,7.6444,6.3556Z" style="fill:rgb(45,100,148)" />
+                                <path d="M14.9444,16.2222,12,19.1667,9.0556,16.2222,7.6444,17.6444,12,22l4.3556-4.3556Z" style="fill:rgb(45,100,148)" />
+                                <path d="M16.2222,9.0556,19.1667,12l-2.9445,2.9444,1.4222,1.4112L22,12,17.6444,7.6444Z" style="fill:rgb(45,100,148)" />
+                                <path d="M7.7778,14.9444,4.8333,12,7.7778,9.0556,6.3556,7.6444,2,12l4.3556,4.3556Z" style="fill:rgb(45,100,148)" />
+                            </g>
+                            <rect width="24" height="24" style="fill:none" />
+                        </svg>
                     </div>
                 </div>
             </div>
