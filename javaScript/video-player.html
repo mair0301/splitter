@@ -323,8 +323,10 @@
 
                         <svg id="muteIcon" class="groupActionButton" style="margin-right: 0.5rem;" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M0,0H24V24H0Z" style="fill:none" />
-                            <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: none; stroke: rgb(45,100,148); stroke-width: 2px;" />
+                            <path d="M18.5,12A4.5,4.5,0,0,0,16,7.97v8.05A4.474,4.474,0,0,0,18.5,12ZM5,9v6H9l5,5V4L9,9Z" style="fill: rgb(45,100,148)" />
+                            <line x1="6" y1="6" x2="18" y2="18" style="stroke: rgb(45,100,148); stroke-width: 2px;" />
                         </svg>
+
 
                         <div class="audioDiv">
                             <input id="volumeSlider" type="range" min="0" max="100" value="0" class="audio slider">
@@ -457,15 +459,11 @@
             if (isMuted)
             {
                 isMuted = false;
-                muteIcon.style.display = "inline-block";
-                soundIcon.style.display = "none";
                 setVolume(videoVolume)
             }
             else
             {
                 isMuted = true;
-                muteIcon.style.display = "none";
-                soundIcon.style.display = "inline-block";
                 setVolume(0);
             }
         }
@@ -475,6 +473,17 @@
             videoPlayer.volume = volume / 100;
             muteVolumeLabel.innerHTML = volume;
             volumeSlider.value = volume;
+
+            if (volume > 0)
+            {
+                muteIcon.style.display = "none";
+                soundIcon.style.display = "inline-block";
+            }
+            else
+            {
+                muteIcon.style.display = "inline-block";
+                soundIcon.style.display = "none";
+            }
         }
 
         function onVolumeChanged(event)
