@@ -766,6 +766,8 @@
                         videoPlayer.webkitRequestFullscreen();
                     else if (videoPlayer.msRequestFullscreen)
                         videoPlayer.msRequestFullscreen();
+
+                    videoPlayer.removeEventListener('click', togglePlayPause);
                 }
                 else
                 {
@@ -775,6 +777,8 @@
                         videoPlayer.webkitExitFullScreen();
                     else if (videoPlayer.mozExitFullScreen)
                         videoPlayer.mozExitFullScreen();
+
+                    videoPlayer.addEventListener('click', togglePlayPause);
                 }
             }
         }
