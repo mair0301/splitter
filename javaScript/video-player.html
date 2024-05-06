@@ -630,6 +630,10 @@
             {
                 timeString += hours + ':';
             }
+            else
+            {
+                timeString += '0:';
+            }
 
             if (minutes < 10)
             {
@@ -655,7 +659,6 @@
         document.addEventListener("DOMContentLoaded", function ()
         {
             videoPlayer = document.getElementById('videoPlayer');
-            videoP = document.getElementById('videoP');
             playPauseIcon = document.getElementById('playPauseIcon');
             volumeIcon = document.getElementById('volumeIcon');
             currentTimeLabel = document.getElementById('currentTimeLabel');
@@ -690,7 +693,6 @@
             audioTopContainer.addEventListener('click', togglePlayPause);
 
             pauseIcon.addEventListener('click', togglePlayPause);
-            videoP.addEventListener('onclick', togglePlayPause)
             progressBar.addEventListener('mousedown', startDragging)
             progressBar.addEventListener('mousemove', dragProgress)
             progressBar.addEventListener('mouseleave', stopDragging)
