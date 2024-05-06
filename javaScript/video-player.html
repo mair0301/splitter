@@ -706,12 +706,6 @@
             coverPlayIcon.style.display = 'none';
             setVolume(25)
 
-            document.addEventListener('fullscreenchange', function (event)
-            {
-                if (!document.fullscreenElement)
-                    videoPlayer.classList.remove('fullscreen');
-            });
-
             document.addEventListener('keydown', function (event)
             {
                 switch (event.key)
@@ -746,6 +740,41 @@
                 audioPlayer.play();
                 isPlaying = true;
             });
+
+            document.addEventListener('fullscreenchange', event =>
+            {
+                chrome.webview.postMessage({ Item1: 'vpFullscreen', Item2: getFullscreen() });
+            });
         })
+
+        function getFullscreen()
+        {
+            return !!document.fullscreen;
+        }
+
+        function setFullscreen(state)
+        {
+            if (!isAudio)
+            {
+                if (state)
+                {
+                    if (videoPlayer.requestFullscreen)
+                        videoPlayer.requestFullscreen();
+                    else if (videoPlayer.webkitRequestFullscreen)
+                        videoPlayer.webkitRequestFullscreen();
+                    else if (videoPlayer.msRequestFullscreen)
+                        videoPlayer.msRequestFullscreen();
+                }
+                else
+                {
+                    if (videoPlayer.exitFullScreen)
+                        videoPlayer.exitFullScreen();
+                    else if (videoPlayer.webkitExitFullScreen)
+                        videoPlayer.webkitExitFullScreen();
+                    else if (videoPlayer.mozExitFullScreen)
+                        videoPlayer.mozExitFullScreen();
+                }
+            }
+        }
     </script>
 </body>
