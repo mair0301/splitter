@@ -544,20 +544,6 @@
             progessBarBuffer.style.widows = Math.min(100, progressPercent + 5);
         }
 
-        function setFullscreen(fullscreenState)
-        {
-            if (!document.fullscreenElement)
-            {
-                videoPlayer.requestFullscreen();
-                videoPlayer.classList.add('fullscreen');
-            }
-            else
-            {
-                videoPlayer.exitFullscreen();
-                videoPlayer.classList.remove('fullscreen');
-            }
-        }
-
         function setVideoSrc(videoURI)
         {
             isAudio = false;
@@ -733,14 +719,12 @@
 
             videoPlayer.addEventListener('loadeddata', function ()
             {
-                videoPlayer.play();
-                isPlaying = true;
+                togglePlayPause();
             });
 
             audioPlayer.addEventListener('loadeddata', function ()
             {
-                audioPlayer.play();
-                isPlaying = true;
+                togglePlayPause();
             });
 
             document.addEventListener('fullscreenchange', event =>
@@ -766,8 +750,6 @@
                         videoPlayer.webkitRequestFullscreen();
                     else if (videoPlayer.msRequestFullscreen)
                         videoPlayer.msRequestFullscreen();
-
-                    videoPlayer.removeEventListener('click', togglePlayPause);
                 }
                 else
                 {
@@ -777,8 +759,6 @@
                         videoPlayer.webkitExitFullScreen();
                     else if (videoPlayer.mozExitFullScreen)
                         videoPlayer.mozExitFullScreen();
-
-                    videoPlayer.addEventListener('click', togglePlayPause);
                 }
             }
         }
