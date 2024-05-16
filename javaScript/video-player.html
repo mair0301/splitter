@@ -94,6 +94,7 @@
 
         .custom-video-player {
             user-select: none;
+            max-height: 90vh !important;
         }
 
         .videoPlayerMain {
@@ -245,7 +246,7 @@
 </head>
 
 <body>
-    <div class="custom-video-player" style="width: 100%;">
+    <div id="mainContainer" class="custom-video-player" style="width: 100%;">
         <div id="videoContainer" class="videoContainer">
             <video class="videoPlayerMain" id="videoPlayer">
                 <source src="../splitter/src/assets/nexus.mp4" type="video/mp4" id="videoP">
@@ -388,6 +389,7 @@
         let audioContainer = document.getElementById('audioContainer')
         let soundIcon = document.getElementById('soundIcon')
         let audioTopContainer = document.getElementById('audioTopContainer');
+        let mainContainer = document.getElementById('mainContainer');
 
         let isPlaying = false;
         let isDragging = false;
@@ -514,6 +516,11 @@
             }
         }
 
+        function leapTime(seconds)
+        {
+            skipVideo(seconds)
+        }
+
         function skipForwardFunc()
         {
             skipVideo(10)
@@ -606,6 +613,11 @@
 
         function secondsToDisplayableTime(seconds)
         {
+            if (isNaN(seconds))
+            {
+                return '00:00';
+            }
+
             var hours = Math.floor(seconds / 3600);
             var minutes = Math.floor((seconds % 3600) / 60);
             var restSeconds = Math.round(seconds % 60);
@@ -668,6 +680,7 @@
             audioContainer = document.getElementById('audioContainer')
             soundIcon = document.getElementById('soundIcon')
             audioTopContainer = document.getElementById('audioTopContainer');
+            mainContainer = document.getElementById('mainContainer');
 
             videoPlayer.addEventListener('timeupdate', updateProgressBar);
             videoPlayer.addEventListener('mouseenter', onMouseEnter);
@@ -744,21 +757,21 @@
             {
                 if (state)
                 {
-                    if (videoPlayer.requestFullscreen)
-                        videoPlayer.requestFullscreen();
-                    else if (videoPlayer.webkitRequestFullscreen)
-                        videoPlayer.webkitRequestFullscreen();
-                    else if (videoPlayer.msRequestFullscreen)
-                        videoPlayer.msRequestFullscreen();
+                    if (mainContainer.requestFullscreen)
+                        mainContainer.requestFullscreen();
+                    else if (mainContainer.webkitRequestFullscreen)
+                        mainContainer.webkitRequestFullscreen();
+                    else if (mainContainer.msRequestFullscreen)
+                        mainContainer.msRequestFullscreen();
                 }
                 else
                 {
-                    if (videoPlayer.exitFullScreen)
-                        videoPlayer.exitFullScreen();
-                    else if (videoPlayer.webkitExitFullScreen)
-                        videoPlayer.webkitExitFullScreen();
-                    else if (videoPlayer.mozExitFullScreen)
-                        videoPlayer.mozExitFullScreen();
+                    if (mainContainer.exitFullScreen)
+                        mainContainer.exitFullScreen();
+                    else if (mainContainer.webkitExitFullScreen)
+                        mainContainer.webkitExitFullScreen();
+                    else if (mainContainer.mozExitFullScreen)
+                        mainContainer.mozExitFullScreen();
                 }
             }
         }
